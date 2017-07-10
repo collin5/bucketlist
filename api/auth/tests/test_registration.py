@@ -22,7 +22,7 @@ class RegisterUserTestCase(TestCase):
                 "password": "password123456"
                 }
 
-        response = request.post(url_for('login'), form)
+        response = request.post(url_for('register'), form)
         self.assertEqual(response.status_code, 200)
 
     def test_register_user_successfully_content(self):
@@ -31,14 +31,14 @@ class RegisterUserTestCase(TestCase):
                 "password": "password123456"
                 }
 
-        response = request.post(url_for('login'), form)
+        response = request.post(url_for('register'), form)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(
             "user registered successfully" in response.content.lower())
 
     def test_register_user_no_params(self):
         form = {}
-        response = request.post(url_for('login'), form)
+        response = request.post(url_for('register'), form)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("please fill all fields" in response.content.lower())
 
