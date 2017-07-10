@@ -5,7 +5,7 @@
 # Date: 10.07.2017
 # Last Modified: 10.07.2017
 
-from flask import Flask 
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
