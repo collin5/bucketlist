@@ -14,7 +14,7 @@ manager = Manager(app)
 
 def confirm_action(func):
     def wrap(*args, **kwargs):
-        stdin = input("Are you sure you want to {} [Y/N] ".format(func.__doc__))
+        stdin = input("Are you sure you want to {} (Y/N) ".format(func.__doc__))
         if stdin.lower() == 'y':
             return func(*args, **kwargs)
         else:
