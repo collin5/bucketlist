@@ -12,8 +12,10 @@ app = Flask(__name__)
 app.config.from_pyfile("config.py")
 
 db = SQLAlchemy(app)
+from .auth.models import User
+from .bucketlist.models import Bucketlist
 
-from views import *
+from .views import *
 
 # run flask app instance
 if __name__ == "__main__":

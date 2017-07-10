@@ -5,7 +5,7 @@
 # Date: 10.07.2017
 # Last Modified: 10.07.2017
 
-from app import app
+from api.app import app
 
 
 @app.route("/")

@@ -15,3 +15,6 @@ class Bucketlist(db.Model):
     description = db.Column(db.String)
     todo_on = db.Column(db.DateTime)
     time_stamp = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __repr__(self):
+        return self.title

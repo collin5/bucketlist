@@ -15,3 +15,6 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(64), unique=True)
     time_stamp = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __repr__(self):
+        return self.username
