@@ -5,7 +5,7 @@
 # Date: 10.07.2017
 # Last Modified: 10.07.2017
 
-from unitest import TestCase
+from unittest import TestCase
 from flask import request, url_for
 from api.app import db
 

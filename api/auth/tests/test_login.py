@@ -5,7 +5,7 @@
 # Date: 10.07.2017
 # Last Modified: 10.07.2017
 
-from unitest import TestCase
+from unittest import TestCase
 from flask import request, url_for
 from api.app import db
 
@@ -41,14 +41,14 @@ class LoginTestCase(TestCase):
                 "password": "nobodypassword"
                 }
         response = request.post(url_for('login'), form)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_login_with_correct_username_wrong_password(self):
         form = {"username": "bucketuser",
                 "password": "withwrongpassword"
                 }
         response = request.post(url_for('login'), form)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_login_with_no_params(self):
         form = {}
@@ -68,7 +68,7 @@ class LoginTestCase(TestCase):
                 "password": "loremipsum"
                 }
         response = request.post(url_for('login'), form)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
         self.assertTrue("invalid login" in response.content.lower())
 
         def test_login_with_no_params_content(self):
