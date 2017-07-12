@@ -6,7 +6,8 @@
 # Last Modified: 10.07.2017
 
 from unittest import TestCase
-from flask import request, url_for
+from flask import url_for
+import requests as request
 from api.app import db
 
 
