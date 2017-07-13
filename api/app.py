@@ -15,7 +15,9 @@ db = SQLAlchemy(app)
 from .auth.models import User
 from .bucketlist.models import Bucketlist
 
+# register views
 from .views import *
+from api.auth.views import *
 
 # run flask app instance
 if __name__ == "__main__":
