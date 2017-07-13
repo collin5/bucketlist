@@ -6,8 +6,7 @@
 # Last Modified: 10.07.2017
 
 from unittest import TestCase
-from flask import url_for
-import requests as request
+from api.app import app
 from api.app import db
 
 
@@ -15,6 +14,7 @@ class RegisterUserTestCase(TestCase):
 
     def setUp(self):
         """Create database and tables """
+        self.app = app.test_client()
         db.create_all()
 
     def test_register_user_successfully(self):
@@ -23,7 +23,7 @@ class RegisterUserTestCase(TestCase):
                 "password": "password123456"
                 }
 
-        response = request.post(url_for('register'), form)
+        response = self.app.post('/auth/register', data=form)
         self.assertEqual(response.status_code, 200)
 
     def test_register_user_successfully_content(self):
@@ -32,14 +32,14 @@ class RegisterUserTestCase(TestCase):
                 "password": "password123456"
                 }
 
-        response = request.post(url_for('register'), form)
+        response = self.app.post('/auth/register/', data=form)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(
             "user registered successfully" in response.content.lower())
 
     def test_register_user_no_params(self):
         form = {}
-        response = request.post(url_for('register'), form)
+        response = self.app.post('/auth/register/', data=form)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("please fill all fields" in response.content.lower())
 
