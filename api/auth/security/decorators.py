@@ -12,7 +12,7 @@ def require_fields(*fields):
     def decorate(func):
         def wrap(*args, **kwargs):
             for field in fields:
-                if request.form.get(field, None) is None:
+                if not  request.form.get(field, None):
                     return "Please fill all fields"
             return func(*args, **kwargs)
         return wrap

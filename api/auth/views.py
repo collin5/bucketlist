@@ -19,13 +19,14 @@ def login():
 @app.route("/auth/register", methods=['POST'])
 @require_fields('username', 'email', 'password')
 def register():
-    username, email = request.form['username'], request.form['email']
+    username, email = request.form['username'].lower(), request.form['email']
     password = request.form['password']
     if User.query.filter_by(username=username).first():
         return "User {} already exists".format(username)
     else:
         user = User(username=username, email=email, password=password) 
         db.session.add(user)
+        db.session.commit()
         return "User added successfully"
 
 
