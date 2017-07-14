@@ -5,27 +5,28 @@
 # Date: 10.07.2017
 # Last Modified: 10.07.2017
 
-from unitest import TestCase
-from flask import request, url_for
+from unittest import TestCase
+from api.app import app
 from api.app import db
 
 
 class LoginTestCase(TestCase):
 
     def setUp(self):
+        self.app = app.test_client()
         db.create_all()
         # create user we are going to use for tests
         form = {"username": "bucketuser",
                 "email": "bucket@user.com",
                 "password": "password123456"
                 }
-        request.post(url_for("register"), form)
+        self.app.post('/auth/login', data=form)
 
     def test_login_with_username_successfully(self):
         form = {"username": "bucketuser",
                 "password": "password123456"
                 }
-        response = request.post(url_for("login"), form)
+        response = self.app.post('/auth/login', data=form)
         self.assertEqual(response.status_code, 200)
 
     def test_login_with_email_successfully(self):
@@ -33,33 +34,33 @@ class LoginTestCase(TestCase):
                 "password": "password123456"
                 }
 
-        response = request.post(url_for("login"), form)
+        response = self.app.post('/auth/login', data=form)
         self.assertEqual(response.status_code, 200)
 
     def test_login_with_wrong_credentials(self):
         form = {"username": "nobody",
                 "password": "nobodypassword"
                 }
-        response = request.post(url_for('login'), form)
-        self.assertEqual(response.status_code, 403)
+        response = self.app.post('/auth/login/', data=form)
+        self.assertEqual(response.status_code, 401)
 
     def test_login_with_correct_username_wrong_password(self):
         form = {"username": "bucketuser",
                 "password": "withwrongpassword"
                 }
-        response = request.post(url_for('login'), form)
-        self.assertEqual(response.status_code, 403)
+        response = self.app.post('/auth/login/', data=form)
+        self.assertEqual(response.status_code, 401)
 
     def test_login_with_no_params(self):
         form = {}
-        response = request.post(url_for('login'), form)
+        response = self.app.post('/auth/login/', data=form)
         self.assertEqual(response.status_code, 200)
 
     def test_login_successfully_content(self):
         form = {"username": "bucketuser",
                 "password": "password123456"
                 }
-        response = request.post(url_for('login'), form)
+        response = self.app.post('/auth/login/', data=form)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("logged in successfully" in response.content.lower())
 
@@ -67,13 +68,13 @@ class LoginTestCase(TestCase):
         form = {"username": "nobody",
                 "password": "loremipsum"
                 }
-        response = request.post(url_for('login'), form)
-        self.assertEqual(response.status_code, 403)
+        response = self.app.post('/auth/login', data=form)
+        self.assertEqual(response.status_code, 401)
         self.assertTrue("invalid login" in response.content.lower())
 
         def test_login_with_no_params_content(self):
             form = {}
-            response = request.post(url_for('login'), form)
+            response = self.app.post('/auth/login/', data=form)
             self.assertEqual(response.status_code, 200)
             self.assertTrue(
                 "please fill all forms" in response.content.lower())
