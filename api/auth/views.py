@@ -18,7 +18,7 @@ def login():
 
 
 @app.route("/auth/register", methods=['POST'])
-@require_fields('username', 'email', 'password')
+@require_fields('username', 'password', email='[^@]+@[^@]+\.[^@]+')
 def register():
     username, email = request.form['username'].lower(), request.form['email']
     password = request.form['password']
