@@ -9,7 +9,7 @@
     "postgresql": "9.4"
   },
   "script": [
-    "nosetest --with-coverage",
+    "nosetests --with-coverage",
   ],
   "after_success": "coveralls",
   "cache": "pip",
