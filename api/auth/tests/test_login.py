@@ -50,9 +50,8 @@ class LoginTestCase(TestCase):
                 }
         response = self.app.post('/auth/login', data=form)
         self.assertEqual(response.status_code, 401)
-        self.assertTrue("user nobody doesn't exist" in response.data.decode('utf-8').lower())
-
-
+        self.assertTrue(
+            "user nobody doesn't exist" in response.data.decode('utf-8').lower())
 
     def test_login_with_correct_username_wrong_password(self):
         form = {"username": "bucketuser",
@@ -67,7 +66,8 @@ class LoginTestCase(TestCase):
                 }
         response = self.app.post('/auth/login', data=form)
         self.assertEqual(response.status_code, 401)
-        self.assertTrue("wrong user password" in response.data.decode('utf-8').lower())
+        self.assertTrue(
+            "wrong user password" in response.data.decode('utf-8').lower())
 
     def test_login_with_no_params(self):
         form = {}

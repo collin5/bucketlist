@@ -45,13 +45,15 @@ class RegisterUserTestCase(TestCase):
 
         response = self.app.post('/auth/register', data=form)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("invalid email" in response.data.decode('utf-8').lower())
+        self.assertTrue(
+            "invalid email" in response.data.decode('utf-8').lower())
 
     def test_register_user_no_params(self):
         form = {}
         response = self.app.post('/auth/register', data=form)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("please fill all fields" in response.data.decode('utf-8').lower())
+        self.assertTrue(
+            "please fill all fields" in response.data.decode('utf-8').lower())
 
     def tearDown(self):
         """Remove database"""
