@@ -23,7 +23,7 @@ class User(db.Model):
 
     @staticmethod
     def make_salt(length=32):
-        """Make unique random salt for user or recur"""
+        """Make unique random salt for user"""
         pick_from = 'ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
         gen_salt = ""
         for i in range(length):
