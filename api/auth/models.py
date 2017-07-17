@@ -28,6 +28,8 @@ class User(db.Model):
         gen_salt = ""
         for i in range(length):
             gen_salt += choice(pick_from)
+
+        # return if slalt is unique
         if not User.query.filter_by(salt=gen_salt).first():
             return gen_salt
         else:
