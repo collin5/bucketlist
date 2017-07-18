@@ -18,6 +18,7 @@ from .bucketlist.models import Bucketlist
 # register views
 from .views import *
 from api.auth.views import *
+from api.bucketlist.views import *
 
 # run flask app instance
 if __name__ == "__main__":
