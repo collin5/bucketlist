@@ -20,7 +20,7 @@ class LoginTestCase(TestCase):
                 "email": "bucket@user.com",
                 "password": "password123456"
                 }
-        self.app.post('/auth/login', data=form)
+        self.app.post('/auth/register', data=form)
 
     def test_login_with_username_successfully(self):
         form = {"username": "bucketuser",
@@ -41,43 +41,53 @@ class LoginTestCase(TestCase):
         form = {"username": "nobody",
                 "password": "nobodypassword"
                 }
-        response = self.app.post('/auth/login/', data=form)
+        response = self.app.post('/auth/login', data=form)
         self.assertEqual(response.status_code, 401)
+
+    def test_login_with_wrong_username(self):
+        form = {"username": "nobody",
+                "password": "loremipsum"
+                }
+        response = self.app.post('/auth/login', data=form)
+        self.assertEqual(response.status_code, 401)
+        self.assertTrue(
+            "user nobody doesn't exist" in response.data.decode('utf-8').lower())
 
     def test_login_with_correct_username_wrong_password(self):
         form = {"username": "bucketuser",
                 "password": "withwrongpassword"
                 }
-        response = self.app.post('/auth/login/', data=form)
+        response = self.app.post('/auth/login', data=form)
         self.assertEqual(response.status_code, 401)
+
+    def test_login_correct_username_wrong_password_message(self):
+        form = {"username": "bucketuser",
+                "password": "withwrongpassword"
+                }
+        response = self.app.post('/auth/login', data=form)
+        self.assertEqual(response.status_code, 401)
+        self.assertTrue(
+            "wrong user password" in response.data.decode('utf-8').lower())
 
     def test_login_with_no_params(self):
         form = {}
-        response = self.app.post('/auth/login/', data=form)
+        response = self.app.post('/auth/login', data=form)
         self.assertEqual(response.status_code, 200)
 
     def test_login_successfully_content(self):
         form = {"username": "bucketuser",
                 "password": "password123456"
                 }
-        response = self.app.post('/auth/login/', data=form)
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue("logged in successfully" in response.content.lower())
-
-    def test_login_with_wrong_credentials_content(self):
-        form = {"username": "nobody",
-                "password": "loremipsum"
-                }
         response = self.app.post('/auth/login', data=form)
-        self.assertEqual(response.status_code, 401)
-        self.assertTrue("invalid login" in response.content.lower())
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.data)
 
         def test_login_with_no_params_content(self):
             form = {}
             response = self.app.post('/auth/login/', data=form)
             self.assertEqual(response.status_code, 200)
             self.assertTrue(
-                "please fill all forms" in response.content.lower())
+                "please fill all fields" in response.data.decode('utf-8').lower())
 
     def tearDown(self):
         db.drop_all()

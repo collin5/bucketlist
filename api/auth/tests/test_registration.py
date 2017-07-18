@@ -32,16 +32,28 @@ class RegisterUserTestCase(TestCase):
                 "password": "password123456"
                 }
 
-        response = self.app.post('/auth/register/', data=form)
+        response = self.app.post('/auth/register', data=form)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(
-            "user registered successfully" in response.content.lower())
+            "user anotheruser added successfully" in response.data.decode('utf-8').lower())
+
+    def test_register_user_wrong_email(self):
+        form = {"username": "anotheruser",
+                "email": "another@",
+                "password": "password123456"
+                }
+
+        response = self.app.post('/auth/register', data=form)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            "invalid email" in response.data.decode('utf-8').lower())
 
     def test_register_user_no_params(self):
         form = {}
-        response = self.app.post('/auth/register/', data=form)
+        response = self.app.post('/auth/register', data=form)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("please fill all fields" in response.content.lower())
+        self.assertTrue(
+            "please fill all fields" in response.data.decode('utf-8').lower())
 
     def tearDown(self):
         """Remove database"""

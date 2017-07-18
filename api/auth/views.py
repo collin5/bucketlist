@@ -22,7 +22,7 @@ def login():
     instance = User.query.filter_by(username=username).first()
     # return if user doesn't exist else verify hash
     if not instance:
-        return "User {} doesn't exist".format(username)
+        return "User {} doesn't exist".format(username), 401
     else:
         salted_phrase = '{}{}'.format(passphrase, instance.salt)
         if instance.password == hashlib.sha256(salted_phrase.encode()).hexdigest():
@@ -32,7 +32,7 @@ def login():
             }
             return jwt.encode(payload, app.secret_key, algorithm='HS256')
 
-        return "Wrong user password, please try again"
+        return "Wrong user password, please try again", 401
 
 
 @app.route("/auth/register", methods=['POST'])
@@ -49,6 +49,6 @@ def register():
                     password=hashlib.sha256(salted_phrase.encode()).hexdigest())
         db.session.add(user)
         db.session.commit()
-        return "User added successfully"
+        return "User {} added successfully".format(username)
     else:
         return "User {} already exists".format(username)
