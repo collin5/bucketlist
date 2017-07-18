@@ -7,7 +7,7 @@
 
 from api.app import app
 
-@app.route("/bucketlists/", methods=['POST', 'GET'])
+@app.route("/bucketlists", methods=['POST', 'GET'])
 def bucketlists():
     pass
 
