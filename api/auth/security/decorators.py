@@ -29,9 +29,10 @@ def require_fields(*fields, **kwfields):
 
 def token_required(func):
     def wrap(*args, **kwargs):
-        token = request.args.get('token', None)
+        token = request.form.get('token', None)
         if not token:
-            return "Token required for this operation"
+            return "Token required for this operation", 403
         wrap.__name__ = func.__name__
         wrap.__doc__ = func.__doc__
         return func(*args, **kwargs)
+    return wrap
