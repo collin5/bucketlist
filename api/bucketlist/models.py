@@ -7,12 +7,14 @@
 
 from api.app import db
 from datetime import datetime
+from api.auth.models import User
 
 
 class Bucketlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True)
     description = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     time_stamp = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __repr__(self):
