@@ -24,7 +24,7 @@ class UpdateBucketlistTestCase(TestCase):
         self.token = self.app.post('/auth/login', data={
             "username": "collins",
             "password": "a very good password"
-        })
+        }).data.decode('utf-8')
 
         # create a bucket list for testing
         self.app.post('/bucketlists', data={
@@ -33,7 +33,6 @@ class UpdateBucketlistTestCase(TestCase):
             "token": self.token
         })
 
-    @skip
     def test_update_bucketlist_successfully(self):
         initial_request = self.app.get('/bucketlists', data={
             "token": self.token
@@ -58,7 +57,6 @@ class UpdateBucketlistTestCase(TestCase):
         self.assertTrue(
             "edited title over here" in final_request.data.decode('utf-8').lower())
 
-    @skip
     def test_update_bucketlist_successfully_content(self):
         update_request = self.app.put("/bucketlists/1", data={
             "title": "Again edited our title, what ?",
@@ -69,7 +67,14 @@ class UpdateBucketlistTestCase(TestCase):
         self.assertTrue(
             "bucketlist updated successfully" in update_request.data.decode('utf-8').lower())
 
-    @skip
+    def test_update_bucketlist_no_form(self):
+        update_request = self.app.put('/bucketlists/1', data={
+            'token': self.token
+        })
+        self.assertEqual(update_request.status_code, 200)
+        self.assertTrue(
+            "nothing to change" in update_request.data.decode('utf-8').lower())
+
     def test_update_bucketlist_index_out_of_range(self):
         update_request = self.app.put("/bucketlists/49", data={
             "title": "Now this is not good",
@@ -79,7 +84,6 @@ class UpdateBucketlistTestCase(TestCase):
         self.assertEqual(update_request.status_code, 404)
         self.assertTrue("bucketlist not found")
 
-    @skip
     def test_update_bucketlist_no_token(self):
         update_request = self.app.put("/bucketlists/1", data={
             "title": "Ok let me try without id",
