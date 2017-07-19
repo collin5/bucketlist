@@ -6,7 +6,7 @@
 # Last Modified: 19.07.2017
 
 from api.app import app, db
-from unittest import TestCase, skip
+from unittest import TestCase
 
 
 class UpdateBucketlistTestCase(TestCase):
