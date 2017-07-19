@@ -6,9 +6,10 @@
 # Last Modified: 10.07.2017
 
 from api.app import app, db
-from flask import request, jsonify 
+from flask import request, jsonify
 from api.auth.security.decorators import require_fields, token_required
-from .models import Bucketlist
+from .models import Bucketlist, BucketItem
+from datetime import datetime
 import jwt
 
 
@@ -38,13 +39,14 @@ def get_bucketlists(id=None):
     payload = jwt.decode(
         request.form['token'], app.secret_key, algorithims=['HS256'])
     query = Bucketlist.query.filter_by(user_id=payload['id']).all(
-        ) if not id else Bucketlist.query.filter_by(user_id=payload['id'], id=id).all()
+    ) if not id else Bucketlist.query.filter_by(user_id=payload['id'], id=id).all()
     if not query:
         return "No bucketlist found", 404
     result = {}
     for obj in query:
         result[obj.id] = [obj.title, obj.description, obj.time_stamp]
     return jsonify(result)
+
 
 @app.route("/bucketlists/<int:id>", methods=['PUT', 'DELETE'])
 @token_required
@@ -54,7 +56,8 @@ def update_bucketlist(id):
 
     if request.method == 'PUT':
         # we are to only edit submitted fileds, else do nothing
-        title, desc = request.form.get('title', None), request.form.get('description', None)
+        title, desc = request.form.get(
+            'title', None), request.form.get('description', None)
         if not title and not desc:
             return "Nothing to change, all fields are null"
 
@@ -79,12 +82,28 @@ def update_bucketlist(id):
             return "Bucketlist deleted successfully"
 
 
+@app.route("/bucketlists/<int:id>/items", methods=['POST'])
+@token_required
+@require_fields('title', 'notes', 'deadline')
+def bucket_items(id):
+    title, notes = request.form['title'], request.form['notes']
+    deadline = datetime.strptime(request.form['deadline'],"%d-%b-%Y")
 
+    payload = jwt.decode(
+        request.form['token'], app.secret_key, algorithims=['HS256'])
 
+    # get bucket list that belongs to user
+    bucketlist = Bucketlist.query.filter_by(
+        user_id=payload['id'], id=id).first()
 
-@app.route("/bucketlists/<int:id>/items/", methods=['POST'])
-def bucketlist_items(id):
-    pass
+    if not bucketlist:
+        return "Bucketlist not found", 404
+    else:
+        item = BucketItem(title=title, notes=notes,
+                          deadline=deadline, bucketlist_id=bucketlist.id)
+        db.session.add(item)
+        db.session.commit()
+        return "Item added successfully"
 
 
 @app.route("/bucketlists/<int:id>/items/<int:item_id>", methods=['PUT', 'DELETE'])
