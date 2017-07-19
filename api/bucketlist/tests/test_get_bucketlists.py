@@ -22,7 +22,7 @@ class GetBucketlistsTestCase(TestCase):
         self.token = self.app.post('/auth/login', data={
             "username": "collins",
             "password": "validpass"
-            })
+            }).data.decode('utf-8')
         # Add bucket list
         first_bucket = {
                 "title": "First bucket",

@@ -9,6 +9,7 @@ from api.app import app, db
 from flask import request
 from api.auth.security.decorators import require_fields, token_required
 from .models import Bucketlist
+import jwt
 
 
 @app.route("/bucketlists", methods=['POST'])
@@ -16,9 +17,10 @@ from .models import Bucketlist
 @require_fields('title', 'description')
 def bucketlists():
     title, desc = request.form['title'], request.form['description']
+    payload = jwt.decode(request.form['token'], app.secret_key, algorithims=['HS256'])
 
     if not Bucketlist.query.filter_by(title=title.lower()).first():
-        bucket = Bucketlist(title=title.lower(), description=desc)
+        bucket = Bucketlist(title=title.lower(), description=desc, user_id=payload['id'])
         db.session.add(bucket)
         db.session.commit()
         return "list {} created successfully".format(title)
