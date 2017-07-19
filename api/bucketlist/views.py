@@ -69,7 +69,14 @@ def update_bucketlist(id):
             if desc:
                 obj.description = desc
             db.session.commit()
-            return "bucketlist updated successfully"
+            return "Bucketlist updated successfully"
+    if request.method == 'DELETE':
+        if not Bucketlist.query.filter_by(user_id=payload['id'], id=id).first():
+            return "Bucketlist not found", 404
+        else:
+            Bucketlist.query.filter_by(user_id=payload['id'], id=id).delete()
+            db.session.commit()
+            return "Bucketlist deleted successfully"
 
 
 
