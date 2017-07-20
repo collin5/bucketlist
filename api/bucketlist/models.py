@@ -30,4 +30,5 @@ class BucketItem(db.Model):
     notes = db.Column(db.String)
     deadline = db.Column(db.DateTime())
     bucketlist_id = db.Column(db.Integer, db.ForeignKey(Bucketlist.id))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     time_stamp = db.Column(db.DateTime, default=datetime.utcnow())

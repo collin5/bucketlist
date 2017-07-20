@@ -6,7 +6,7 @@
 # Last Modified: 20.07.2017
 
 from api.app import app, db
-from unittest import TestCase, skip
+from unittest import TestCase
 
 
 class GetItemTestCase(TestCase):
@@ -26,28 +26,26 @@ class GetItemTestCase(TestCase):
             "password": "nopassword"
         }).data.decode('utf-8')
 
-        self.app.post('/buckelists', data={
+        self.app.post('/bucketlists', data={
             "title": "The bucket man",
             "description": "this is a decription",
             "token": self.token
         })
 
         # add bucket item for test case
-        self.app.post('/bucketlists/1/items', data={
+        x = self.app.post('/bucketlists/1/items', data={
             "title": "item",
-            "description": "lorem ipsum dor ...",
+            "notes": "lorem ipsum dor ...",
             "deadline": "01-Feb-2019",
             "token": self.token
         })
 
-    @skip
     def test_get_bucket_item_succcessfully(self):
         response = self.app.get('/bucketlists/1/items', data={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
 
-    @skip
     def test_get_bucket_item_succcessfully_content(self):
         response = self.app.get('/bucketlists/1/items', data={
             "token": self.token
@@ -55,16 +53,14 @@ class GetItemTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue("item" in response.data.decode('utf-8').lower())
 
-    @skip
     def test_get_bucket_item_list_out_of_range(self):
-        response = self.app.get('/buckelists/2/items', data={
+        response = self.app.get('/bucketlists/2/items', data={
             "token": self.token
         })
         self.assertEqual(response.status_code, 404)
         self.assertTrue(
             "bucketlist not found" in response.data.decode('utf-8').lower())
 
-    @skip
     def test_get_bucket_item_with_id_successfully(self):
         response = self.app.get('/bucketlists/1/items/1', data={
             "token": self.token
@@ -72,16 +68,14 @@ class GetItemTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue("item" in response.data.decode('utf-8').lower())
 
-    @skip
     def test_get_bucket_item_item_out_range(self):
         response = self.app.get('/bucketlists/1/items/2', data={
             "token": self.token
         })
-        self.assertEqual(response.status_code, 4040)
+        self.assertEqual(response.status_code, 404)
         self.assertTrue(
             "item not found" in response.data.decode('utf-8').lower())
 
-    @skip
     def test_get_bucket_items_no_token(self):
         response = self.app.get('/bucketlists/1/items', data=None)
         self.assertEqual(response.status_code, 403)
