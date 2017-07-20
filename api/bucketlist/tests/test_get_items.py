@@ -33,7 +33,7 @@ class GetItemTestCase(TestCase):
         })
 
         # add bucket item for test case
-        x = self.app.post('/bucketlists/1/items', data={
+        self.app.post('/bucketlists/1/items', data={
             "title": "item",
             "notes": "lorem ipsum dor ...",
             "deadline": "01-Feb-2019",
