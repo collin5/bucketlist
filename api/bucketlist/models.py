@@ -11,6 +11,8 @@ from api.auth.models import User
 
 
 class Bucketlist(db.Model):
+    __tablename__ = "tbl_bucketlists"
+    
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True)
     description = db.Column(db.String)
@@ -19,3 +21,14 @@ class Bucketlist(db.Model):
 
     def __repr__(self):
         return self.title
+
+class BucketItem(db.Model):
+    __tablename__ = "tbl_bucketitems"
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    notes = db.Column(db.String)
+    deadline = db.Column(db.DateTime())
+    bucketlist_id = db.Column(db.Integer, db.ForeignKey(Bucketlist.id))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    time_stamp = db.Column(db.DateTime, default=datetime.utcnow())
