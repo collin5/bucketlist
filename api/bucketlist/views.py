@@ -139,5 +139,43 @@ def get_bucket_items(id, item_id=None):
 
 
 @app.route("/bucketlists/<int:id>/items/<int:item_id>", methods=['PUT', 'DELETE'])
+@token_required
 def update_bucket_items(id, item_id):
-    pass
+    payload = Static.decode_token(request)
+
+    title, notes = request.form.get('title', None), request.form.get('notes',None)
+    deadline = request.form.get('deadline', None)
+
+    if not title and not notes and not deadline:
+        return "Nothing to change", 200
+    
+    if request.method == 'PUT':
+        # first check if bucketlist exists
+        if not Bucketlist.query.filter_by(user_id=payload['id'], id=id).first():
+            return "Bucketlist not found", 404
+        else:
+            item = BucketItem.query.filter_by(user_id=payload['id'], id=item_id, bucketlist_id=id).first()
+
+            # Also check if bucket item exists
+            if not item:
+                return "Bucketitem not found", 404
+            else:
+                if title:
+                    item.title = title
+                if notes:
+                    item.notes = notes
+                if deadline:
+                    item.deadline = deadline
+                db.session.commit()
+                return "Bucket item successfully updated", 200
+
+    
+                
+        
+
+
+
+
+
+
+
