@@ -107,7 +107,7 @@ def bucket_items(id):
         return "Bucketlist not found", 404
     else:
         item = BucketItem(title=title, notes=notes,
-                          deadline=deadline, bucketlist_id=bucketlist.id,user_id=payload['id'])
+                          deadline=deadline, bucketlist_id=bucketlist.id, user_id=payload['id'])
         db.session.add(item)
         db.session.commit()
         return "Item added successfully"
@@ -143,22 +143,23 @@ def get_bucket_items(id, item_id=None):
 def update_bucket_items(id, item_id):
     payload = Static.decode_token(request)
 
-    title, notes = request.form.get('title', None), request.form.get('notes',None)
-    deadline = request.form.get('deadline', None)
+    # first check if bucketlist exists
+    if not Bucketlist.query.filter_by(user_id=payload['id'], id=id).first():
+        return "Bucketlist not found", 404
+    else:
+        item = BucketItem.query.filter_by(
+            user_id=payload['id'], id=item_id, bucketlist_id=id).first()
+        # Also check if bucket item exists
+        if not item:
+            return "Bucketitem not found", 404
 
-    if not title and not notes and not deadline:
-        return "Nothing to change", 200
-    
-    if request.method == 'PUT':
-        # first check if bucketlist exists
-        if not Bucketlist.query.filter_by(user_id=payload['id'], id=id).first():
-            return "Bucketlist not found", 404
-        else:
-            item = BucketItem.query.filter_by(user_id=payload['id'], id=item_id, bucketlist_id=id).first()
+        if request.method == 'PUT':
+            title, notes = request.form.get(
+                'title', None), request.form.get('notes', None)
+            deadline = request.form.get('deadline', None)
 
-            # Also check if bucket item exists
-            if not item:
-                return "Bucketitem not found", 404
+            if not title and not notes and not deadline:
+                return "Nothing to change", 200
             else:
                 if title:
                     item.title = title
@@ -168,14 +169,3 @@ def update_bucket_items(id, item_id):
                     item.deadline = deadline
                 db.session.commit()
                 return "Bucketitem successfully updated", 200
-
-    
-                
-        
-
-
-
-
-
-
-
