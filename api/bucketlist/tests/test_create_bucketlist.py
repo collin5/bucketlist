@@ -25,7 +25,7 @@ class CreateBucketList(TestCase):
         self.token = self.app.post('/auth/login', data={
             "username": "collins",
             "password": "validpassword"
-        })
+        }).data.decode('utf-8')
 
     def test_create_bucketlist_successfully(self):
         form = {
