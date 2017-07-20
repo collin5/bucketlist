@@ -6,7 +6,7 @@
 # Last Modified: 20.07.2017
 
 from api.app import app, db
-from unittest import TestCase, skip
+from unittest import TestCase 
 
 
 class DeleteItemTestCase(TestCase):
@@ -32,20 +32,19 @@ class DeleteItemTestCase(TestCase):
             "token": self.token
         })
 
-        self.app.post('/bucketlists/1/items', data={
+        x = self.app.post('/bucketlists/1/items', data={
             "title": "my nice item",
             "notes": "no notes for this item",
-            "deadline": "01-Dec-3031"
+            "deadline": "01-Dec-3031",
+            "token": self.token
         })
 
-    @skip
     def test_delete_item_successfully(self):
         response = self.app.delete('/bucketlists/1/items/1', data={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
 
-    @skip
     def test_delete_item_successfully_message(self):
         response = self.app.delete('/bucketlists/1/items/1', data={
             "token": self.token
@@ -54,14 +53,12 @@ class DeleteItemTestCase(TestCase):
         self.assertTrue(
             "item successfully deleted" in response.data.decode('utf-8').lower())
 
-    @skip
     def test_delete_item_no_token(self):
         response = self.app.delete('/bucketlists/1/items/1', data=None)
         self.assertEqual(response.status_code, 403)
         self.assertTrue(
             "token required" in response.data.decode('utf-8').lower())
 
-    @skip
     def test_delete_item_bucketlist_out_of_range(self):
         response = self.app.delete('/bucketlists/4/items/1', data={
             "token": self.token
@@ -70,7 +67,6 @@ class DeleteItemTestCase(TestCase):
         self.assertTrue(
             "bucketlist not found" in response.data.decode('utf-8').lower())
 
-    @skip
     def test_dlete_item_our_of_range(self):
         response = self.app.delete('/bucketlists/1/items/3', data={
             "token": self.token

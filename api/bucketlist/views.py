@@ -169,3 +169,18 @@ def update_bucket_items(id, item_id):
                     item.deadline = deadline
                 db.session.commit()
                 return "Bucketitem successfully updated", 200
+        if request.method =='DELETE':
+            BucketItem.query.filter_by(user_id=payload['id'], id=item_id, bucketlist_id=id).delete()
+            db.session.commit()
+            return "Bucketitem successfully deleted", 200
+
+
+
+
+
+
+
+
+
+
+            
