@@ -167,7 +167,7 @@ def update_bucket_items(id, item_id):
                 if deadline:
                     item.deadline = deadline
                 db.session.commit()
-                return "Bucket item successfully updated", 200
+                return "Bucketitem successfully updated", 200
 
     
                 

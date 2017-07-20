@@ -81,7 +81,7 @@ class UpdateItemTestCase(TestCase):
         self.assertTrue(
             "new title for item" in final_item.data.decode('utf-8').lower())
 
-    def test_update_item_successfuly_no_token(self):
+    def test_update_item_no_token(self):
         response = self.app.put('/bucketlists/1/items/1', data={
             "title": "My new awesome title"
         })
