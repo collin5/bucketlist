@@ -17,6 +17,10 @@ class BaseTestCase(TestCase):
     def setUp(ctx):
         ctx.app = app.test_client()
         db.create_all()
+    
+    def test_content_type(self):
+        response = self.app.post('/auth/login', data=None) 
+        self.assertEqual(response.content_type, 'application/json')
 
     def tearDown(self):
         db.drop_all()

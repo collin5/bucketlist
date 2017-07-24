@@ -8,6 +8,7 @@
 from unittest import TestCase
 from api.app import app, db
 from abc import ABCMeta
+import json
 
 
 class BaseTestCase(TestCase):
@@ -25,10 +26,14 @@ class BaseTestCase(TestCase):
         }
         ctx.app.post('/auth/register', data=form)
         # now login to get the user token
-        ctx.token = ctx.app.post('/auth/login', data={
+        ctx.token = json.loads(ctx.app.post('/auth/login', data={
             "username": "collins",
             "password": "validpassword"
-        }).data.decode('utf-8')
+        }).data.decode('utf-8'))['token']
+
+    def test_content_type(self):
+        response = self.app.post('/auth/login', data=None)
+        self.assertEqual(response.content_type, 'application/json')
 
     def tearDown(self):
         db.drop_all()
