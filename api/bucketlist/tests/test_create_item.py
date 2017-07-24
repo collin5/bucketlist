@@ -5,27 +5,13 @@
 # Date: 19.07.2017
 # Last Modified: 19.07.2017
 
-from api.app import app, db
-from unittest import TestCase
+from .base import BaseTestCase
 
 
-class CreateItemTestCase(TestCase):
+class CreateItemTestCase(BaseTestCase):
 
     def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
-
-        reg_form = {
-            "username": "collins",
-            "email": "collins@andela.com",
-            "password": "privatepa55word"
-        }
-        self.app.post('/auth/register', data=reg_form)
-        self.token = self.app.post('/auth/login', data={
-            "username": "collins",
-            "password": "privatepa55word"
-        }).data.decode('utf-8')
-
+        BaseTestCase.setUp()
         # create bucketlist for the test
         self.app.post('/bucketlists', data={
             "title": "Here comes the bucketlist",
@@ -81,10 +67,7 @@ class CreateItemTestCase(TestCase):
     def test_create_bucketlist_item_empty_form(self):
         response = self.app.post('/bucketlists/1/items', data={
             "token": self.token
-            })
+        })
         self.assertEqual(response.status_code, 200)
         self.assertTrue(
             "please fill all fields" in response.data.decode('utf-8').lower())
-
-    def tearDown(self):
-        db.drop_all()

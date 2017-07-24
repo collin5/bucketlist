@@ -6,15 +6,13 @@
 # Last Modified: 10.07.2017
 
 from unittest import TestCase
-from api.app import app
-from api.app import db
+from .base import BaseTestCase
 
 
-class LoginTestCase(TestCase):
-
+class LoginTestCase(BaseTestCase):
+    
     def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
+        BaseTestCase.setUp()
         # create user we are going to use for tests
         form = {"username": "bucketuser",
                 "email": "bucket@user.com",
@@ -89,5 +87,3 @@ class LoginTestCase(TestCase):
             self.assertTrue(
                 "please fill all fields" in response.data.decode('utf-8').lower())
 
-    def tearDown(self):
-        db.drop_all()

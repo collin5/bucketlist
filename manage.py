@@ -8,34 +8,11 @@
 from flask_script import Manager
 from api.app import app
 from api.app import db
+from flask_migrate import Migrate, MigrateCommand
 
-
+migrate = Migrate(app, db)
 manager = Manager(app)
-
-def confirm_action(func):
-    def wrap(*args, **kwargs):
-        stdin = input("Are you sure you want to {} (Y/N) ".format(func.__doc__))
-        if stdin.lower() == 'y':
-            return func(*args, **kwargs)
-        else:
-            return False
-
-    wrap.__name__ = func.__name__
-    wrap.__doc__ = func.__doc__
-    return wrap
-
-@manager.command
-@confirm_action
-def migrate():
-    """run migrations"""
-    db.create_all()
-
-@manager.command
-@confirm_action
-def drop():
-    """drop database"""
-    db.drop_all()
-
+manager.add_command('db', MigrateCommand)
 
 if __name__ == "__main__":
     manager.run()

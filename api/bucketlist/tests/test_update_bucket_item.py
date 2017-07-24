@@ -5,27 +5,14 @@
 # Date: 20.07.2017
 # Last Modified: 20.07.2017
 
-from api.app import app, db
-from unittest import TestCase 
+
+from .base import BaseTestCase
 
 
-class UpdateItemTestCase(TestCase):
+class UpdateItemTestCase(BaseTestCase):
 
     def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
-
-        reg_form = {
-            "username": "lorem",
-            "email": "lorem@ipsum.com",
-            "password": "ipsum"
-        }
-
-        self.app.post('/auth/register', data=reg_form)
-        self.token = self.app.post('/auth/login', data={
-            "username": "lorem",
-            "password": "ipsum"
-        }).data.decode('utf-8')
+        BaseTestCase.setUp()
 
         self.app.post('/bucketlists', data={
             "title": "list",
@@ -115,6 +102,3 @@ class UpdateItemTestCase(TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertTrue(
             "bucketitem not found" in response.data.decode('utf-8').lower())
-
-    def tearDown(self):
-        db.drop_all()
