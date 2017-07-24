@@ -7,7 +7,6 @@
 
 from .base import BaseTestCase
 import json
-from unittest import skip
 
 
 class SearchTestCase(BaseTestCase):
@@ -18,22 +17,20 @@ class SearchTestCase(BaseTestCase):
         bucketlists = ["One", "Two", "Three", "Four", "Five", "Six"]
         for name in bucketlists:
             self.app.post('/bucketlists', data={
-                "name": name,
+                "title": name,
                 "description": "lorem ipsum dor description",
                 "token": self.token
             })
 
-    @skip
     def test_search_db_successfully(self):
-        response = self.bucketlists.get("/bucketlists", data={
+        response = self.app.get("/bucketlists", data={
             "q": "one",
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
 
-    @skip
     def test_search_db_successfully_content(self):
-        response = self.bucketlists.get("/bucketlists", data={
+        response = self.app.get("/bucketlists", data={
             "q": "one",
             "token": self.token
         })
@@ -41,9 +38,8 @@ class SearchTestCase(BaseTestCase):
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 1)
 
-    @skip
     def test_search_db_kewords_content(self):
-        response = self.bucketlists.get("/bucketlists", data={
+        response = self.app.get("/bucketlists", data={
             "q": 't',
             "token": self.token
         })
@@ -51,12 +47,11 @@ class SearchTestCase(BaseTestCase):
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 2)
 
-    @skip
     def test_search_not_found(self):
-        response = self.bucketlists.get("/bucketlists", data={
+        response = self.app.get("/bucketlists", data={
             "q": "lslsliehfie",
             "token": self.token
         })
         self.assertEqual(response.status_code, 404)
         self.assertTrue(
-            "bucketlist not found" in response.data.decode('utf-8'))
+            "no bucketlist found" in response.data.decode('utf-8').lower())

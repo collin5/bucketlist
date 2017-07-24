@@ -49,6 +49,7 @@ def get_bucketlists(id=None):
     payload = Static.decode_token(request)
     limit, offset = request.form.get(
         'limit', None), request.form.get('offset', None)
+    search = request.form.get('q', None)
 
     query = Bucketlist.query.filter_by(
         user_id=payload['id']) if not id else Bucketlist.query.filter_by(user_id=payload['id'], id=id)
@@ -56,6 +57,8 @@ def get_bucketlists(id=None):
         query = query.offset(offset)
     if limit:
         query = query.limit(limit)
+    if search:
+        query = query.filter(Bucketlist.title.like("%{}%".format(search.lower())))
     query = query.all()
     if not query:
         return jsonify({
