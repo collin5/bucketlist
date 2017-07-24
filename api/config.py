@@ -10,9 +10,9 @@ import os
 SECRET_KEY = os.getenv(
     'SECRET_KEY') or "\x84\xaeI\x13\n\x9fa  \n\xdf\x08\xdb'p\x024\x1a\x9d\xc7\x01N\x02\xb9"
 
-SQLALCHEMY_DATABASE_URI = "sqlite:///{}".format("sqlite.db")
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', "postgres:///{}".format("bucketflow"))
 
 # change to false when in production
-DEBUG = True
+DEBUG = False if os.environ.get('PRODUCTION', False) else True
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
