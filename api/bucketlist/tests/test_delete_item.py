@@ -5,26 +5,13 @@
 # Date: 20.07.2017
 # Last Modified: 20.07.2017
 
-from api.app import app, db
-from unittest import TestCase 
+from .base import BaseTestCase
 
 
-class DeleteItemTestCase(TestCase):
+class DeleteItemTestCase(BaseTestCase):
 
     def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
-
-        reg_form = {
-            "username": "lorem",
-            "email": "lorem@ipsum.io",
-            "password": "password"
-        }
-        self.app.post('/auth/register', data=reg_form)
-        self.token = self.app.post('/auth/login', data={
-            "username": "lorem",
-            "password": "password"
-        }).data.decode('utf-8')
+        BaseTestCase.setUp()
 
         self.app.post('/bucketlists', data={
             "title": "I love todos",
@@ -32,7 +19,7 @@ class DeleteItemTestCase(TestCase):
             "token": self.token
         })
 
-        x = self.app.post('/bucketlists/1/items', data={
+        self.app.post('/bucketlists/1/items', data={
             "title": "my nice item",
             "notes": "no notes for this item",
             "deadline": "01-Dec-3031",
@@ -75,6 +62,3 @@ class DeleteItemTestCase(TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertTrue(
             "item not found" in response.data.decode('utf-8').lower())
-
-    def tearDown(self):
-        db.drop_all()

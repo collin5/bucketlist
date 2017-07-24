@@ -5,27 +5,13 @@
 # Date: 19.07.2017
 # Last Modified: 19.07.2017
 
-from api.app import app, db
-from unittest import TestCase, skip
+from .base import BaseTestCase
 
 
-class DeleteBucketlistTestCase(TestCase):
+class DeleteBucketlistTestCase(BaseTestCase):
 
     def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
-
-        reg_form = {
-            "username": "collins",
-            "email": "collins@andela.com",
-            "password": "v3rY5trongPa5SworD?"
-        }
-        self.app.post('/auth/register', data=reg_form)
-        self.token = self.app.post('/auth/login', data={
-            "username": "collins",
-            "password": "v3rY5trongPa5SworD?"
-        }).data.decode('utf-8')
-
+        BaseTestCase.setUp()
         # our testing bucketlist
         self.app.post('/bucketlists', data={
             "title": "I'm a bucketlist",
@@ -66,6 +52,3 @@ class DeleteBucketlistTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
         self.assertTrue(
             "token required" in response.data.decode('utf-8').lower())
-
-    def tearDown(self):
-        db.drop_all()

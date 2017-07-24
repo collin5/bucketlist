@@ -5,17 +5,10 @@
 # Date: 10.07.2017
 # Last Modified: 10.07.2017
 
-from unittest import TestCase
-from api.app import app
-from api.app import db
 
+from .base import BaseTestCase
 
-class RegisterUserTestCase(TestCase):
-
-    def setUp(self):
-        """Create database and tables """
-        self.app = app.test_client()
-        db.create_all()
+class RegisterUserTestCase(BaseTestCase):
 
     def test_register_user_successfully(self):
         form = {"username": "bucketuser",
@@ -55,6 +48,3 @@ class RegisterUserTestCase(TestCase):
         self.assertTrue(
             "please fill all fields" in response.data.decode('utf-8').lower())
 
-    def tearDown(self):
-        """Remove database"""
-        db.drop_all()

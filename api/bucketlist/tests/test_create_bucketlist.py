@@ -5,27 +5,10 @@
 # Date: 17.07.2017
 # Last Modified: 17.07.2017
 
-from unittest import TestCase
-from api.app import app, db
+from .base import BaseTestCase
 
 
-class CreateBucketList(TestCase):
-
-    def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
-        # first create user object
-        form = {
-            "username": "collins",
-            "email": "collins@google.com",
-            "password": "validpassword"
-        }
-        self.app.post('/auth/register', data=form)
-        # now login to get the user token
-        self.token = self.app.post('/auth/login', data={
-            "username": "collins",
-            "password": "validpassword"
-        }).data.decode('utf-8')
+class CreateBucketList(BaseTestCase):
 
     def test_create_bucketlist_successfully(self):
         form = {
@@ -47,9 +30,8 @@ class CreateBucketList(TestCase):
 
         dup_response = self.app.post('/bucketlists', data=form)
         self.assertEqual(dup_response.status_code, 200)
-        self.assertTrue("list my list already exists" in dup_response.data.decode('utf-8').lower())
-
-
+        self.assertTrue(
+            "list my list already exists" in dup_response.data.decode('utf-8').lower())
 
     def test_create_bucketlist_no_token(self):
         form = {
@@ -77,7 +59,5 @@ class CreateBucketList(TestCase):
         }
         response = self.app.post('/bucketlists', data=form)
         self.assertEqual(response.status_code, 403)
-        self.assertTrue("token required" in response.data.decode('utf-8').lower())
-
-    def tearDown(self):
-        db.drop_all()
+        self.assertTrue(
+            "token required" in response.data.decode('utf-8').lower())

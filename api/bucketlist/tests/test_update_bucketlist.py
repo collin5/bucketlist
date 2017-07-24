@@ -4,28 +4,13 @@
 # Author: Collins Abitekaniza <abtcolns@gmail.com>
 # Date: 19.07.2017
 # Last Modified: 19.07.2017
-
-from api.app import app, db
-from unittest import TestCase
+from .base import BaseTestCase
 
 
-class UpdateBucketlistTestCase(TestCase):
+class UpdateBucketlistTestCase(BaseTestCase):
 
     def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
-
-        reg_form = {
-            "username": "collins",
-            "email": "collins@andela.com",
-            "password": "a very good password"
-        }
-        self.app.post('/auth/register', data=reg_form)
-        self.token = self.app.post('/auth/login', data={
-            "username": "collins",
-            "password": "a very good password"
-        }).data.decode('utf-8')
-
+        BaseTestCase.setUp()
         # create a bucket list for testing
         self.app.post('/bucketlists', data={
             "title": "Awesome, beautiful list",
@@ -92,6 +77,3 @@ class UpdateBucketlistTestCase(TestCase):
         self.assertEqual(update_request.status_code, 403)
         self.assertTrue(
             "token required" in update_request.data.decode('utf-8').lower())
-
-    def tearDown(self):
-        db.drop_all()
