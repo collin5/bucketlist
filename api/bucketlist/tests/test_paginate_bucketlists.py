@@ -6,7 +6,6 @@
 # Last Modified: 24.07.2017
 
 from .base import BaseTestCase
-from unittest import skip
 import json
 
 
