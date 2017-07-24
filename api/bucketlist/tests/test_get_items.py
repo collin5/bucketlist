@@ -5,26 +5,13 @@
 # Date: 20.07.2017
 # Last Modified: 20.07.2017
 
-from api.app import app, db
-from unittest import TestCase
+from .base import BaseTestCase
 
 
-class GetItemTestCase(TestCase):
+class GetItemTestCase(BaseTestCase):
 
     def setUp(self):
-        self.app = app.test_client()
-        db.create_all()
-
-        reg_form = {
-            "username": "collins",
-            "email": "collins@andela.com",
-            "password": "nopassword"
-        }
-        self.app.post('/auth/register', data=reg_form)
-        self.token = self.app.post('/auth/login', data={
-            "username": "collins",
-            "password": "nopassword"
-        }).data.decode('utf-8')
+        BaseTestCase.setUp()
 
         self.app.post('/bucketlists', data={
             "title": "The bucket man",
@@ -81,6 +68,3 @@ class GetItemTestCase(TestCase):
         self.assertEqual(response.status_code, 403)
         self.assertTrue(
             "token required" in response.data.decode('utf-8').lower())
-
-    def tearDown(self):
-        db.drop_all()
