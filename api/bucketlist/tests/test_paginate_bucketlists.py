@@ -23,7 +23,6 @@ class PaginationTestCase(BaseTestCase):
                 "token": self.token
             })
 
-    @skip
     def test_limit_successfully(self):
         response = self.app.get('/bucketlists', data={
             "limit": 2,
@@ -31,7 +30,6 @@ class PaginationTestCase(BaseTestCase):
         })
         self.assertEqual(response.status_code, 200)
 
-    @skip
     def test_limit_content(self):
         response = self.app.get('/bucketlists', data={
             "limit": 3,
@@ -41,7 +39,6 @@ class PaginationTestCase(BaseTestCase):
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 3)
 
-    @skip
     def test_offset_successfully(self):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
@@ -49,7 +46,6 @@ class PaginationTestCase(BaseTestCase):
         })
         self.assertEqual(response.status_code, 200)
 
-    @skip
     def test_offset_content(self):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
@@ -59,20 +55,20 @@ class PaginationTestCase(BaseTestCase):
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 3)
 
-    @skip
     def test_limit_with_offset_successfully(self):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
-            "limit": 4
+            "limit": 4,
+            "token": self.token
         })
         self.assertEqual(response.status_code, 200)
 
-    @skip
     def test_limit_with_offset_content(self):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
-            "limit": 4
+            "limit": 4,
+            "token": self.token
         })
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            len(json.loads(response.data.decode('utf-8'))['bucketlists']), 2)
+            len(json.loads(response.data.decode('utf-8'))['bucketlists']), 3)
