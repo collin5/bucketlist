@@ -10,4 +10,4 @@ from api.app import app
 
 @app.route("/")
 def index():
-    return "You do not belong here"
+    return "Frontend still under construction :)"

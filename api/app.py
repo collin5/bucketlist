@@ -7,6 +7,7 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
@@ -21,5 +22,6 @@ from api.auth.views import *
 from api.bucketlist.views import *
 
 # run flask app instance
+port = int(os.environ.get("PORT", 5000))
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=port)
