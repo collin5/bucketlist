@@ -6,8 +6,10 @@
 # Last Modified: 10.07.2017
 
 from api.app import app
+from flask import request, redirect
 
 
 @app.route("/")
 def index():
-    return "Frontend still under construction :)"
+    # TODO: will use to launch front end later
+    return redirect("{}apidocs".format(request.url), code=302)
