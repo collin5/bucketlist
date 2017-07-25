@@ -47,9 +47,9 @@ def bucketlists():
 def get_bucketlists(id=None):
     """Gets bucket list from database"""
     payload = Static.decode_token(request)
-    limit, offset = request.form.get(
-        'limit', None), request.form.get('offset', None)
-    search = request.form.get('q', None)
+    limit, offset = request.args.get(
+        'limit', None), request.args.get('offset', None)
+    search = request.args.get('q', None)
 
     query = Bucketlist.query.filter_by(
         user_id=payload['id']) if not id else Bucketlist.query.filter_by(user_id=payload['id'], id=id)
