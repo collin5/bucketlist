@@ -8,7 +8,6 @@
 from api.app import db
 from datetime import datetime
 from random import choice
-import string
 
 
 class User(db.Model):

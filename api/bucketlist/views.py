@@ -122,7 +122,12 @@ def update_bucketlist(id):
 @require_fields('title', 'notes', 'deadline')
 def bucket_items(id):
     title, notes = request.form['title'], request.form['notes']
-    deadline = datetime.strptime(request.form['deadline'], "%d-%b-%Y")
+    try:
+        deadline = datetime.strptime(request.form['deadline'], "%d-%b-%Y")
+    except Exception as ex:
+        return jsonify({
+            "error_msg": "Ivalid date format please, use dd-M-Y"
+            })
 
     payload = Static.decode_token(request)
 
