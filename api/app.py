@@ -7,9 +7,11 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flasgger import Swagger
 import os
 
 app = Flask(__name__)
+Swagger(app)
 app.config.from_pyfile("config.py")
 
 db = SQLAlchemy(app)
