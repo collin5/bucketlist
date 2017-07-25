@@ -16,25 +16,23 @@ class GetBucketlistsTestCase(BaseTestCase):
         first_bucket = {
             "title": "First bucket",
             "description": "lorem ipsum blah blah ",
-            "token": self.token
         }
         second_bucket = {
             "title": "Second bucket",
             "description": "lorem from second bucket is awesome",
-            "token": self.token
         }
-        self.app.post('/bucketlists', data=first_bucket)
-        self.app.post('/bucketlists', data=second_bucket)
+        self.app.post('/bucketlists', data=first_bucket, headers={"token": self.token})
+        self.app.post('/bucketlists', data=second_bucket, headers={"token": self.token})
 
     def test_get_bucketlist_successfully(self):
-        form = {
+        headers = {
             "token": self.token
         }
-        response = self.app.get('/bucketlists', data=form)
+        response = self.app.get('/bucketlists', headers=headers)
         self.assertEqual(response.status_code, 200)
 
     def test_get_bucketlists_successfully_content(self):
-        response = self.app.get('/bucketlists', data={
+        response = self.app.get('/bucketlists', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
@@ -47,14 +45,14 @@ class GetBucketlistsTestCase(BaseTestCase):
         form = {
             "token": self.token
         }
-        response = self.app.get('/bucketlists/1', data=form)
+        response = self.app.get('/bucketlists/1', headers=form)
         self.assertEqual(response.status_code, 200)
 
     def test_get_single_bucketlist_successfully_content(self):
         form = {
             "token": self.token
         }
-        response = self.app.get('/bucketlists/2', data=form)
+        response = self.app.get('/bucketlists/2', headers=form)
         self.assertEqual(response.status_code, 200)
         self.assertTrue('second' in response.data.decode('utf-8').lower())
 
@@ -62,7 +60,7 @@ class GetBucketlistsTestCase(BaseTestCase):
         form = {
             "token": self.token
         }
-        response = self.app.get('/bucketlists/37', data=form)
+        response = self.app.get('/bucketlists/37', headers=form)
         self.assertEqual(response.status_code, 404)
         self.assertTrue(
             'no bucketlist found' in response.data.decode('utf-8').lower())

@@ -19,21 +19,18 @@ class PaginationTestCase(BaseTestCase):
             self.app.post('/bucketlists', data={
                 "title": name,
                 "description": "lorem ipsum dor ...",
-                "token": self.token
-            })
+                }, headers={"token": self.token})
 
     def test_limit_successfully(self):
         response = self.app.get('/bucketlists', data={
             "limit": 2,
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
 
     def test_limit_content(self):
         response = self.app.get('/bucketlists', data={
             "limit": 3,
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 3)
@@ -41,15 +38,13 @@ class PaginationTestCase(BaseTestCase):
     def test_offset_successfully(self):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
 
     def test_offset_content(self):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 3)
@@ -58,16 +53,14 @@ class PaginationTestCase(BaseTestCase):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
             "limit": 4,
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
 
     def test_limit_with_offset_content(self):
         response = self.app.get('/bucketlists', data={
             "offset": 2,
             "limit": 4,
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 3)

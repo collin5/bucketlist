@@ -13,22 +13,20 @@ class CreateBucketList(BaseTestCase):
     def test_create_bucketlist_successfully(self):
         form = {
             "title": "My list",
-            "description": "lorem ipsum blah blah",
-            "token": self.token
+            "description": "lorem ipsum blah blah"
         }
-        response = self.app.post('/bucketlists', data=form)
+        response = self.app.post('/bucketlists', data=form, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
 
     def test_create_bucketlist_duplicate(self):
         form = {
             "title": "My list",
             "description": "lorem ipsum blah blah",
-            "token": self.token
         }
-        response = self.app.post('/bucketlists', data=form)
+        response = self.app.post('/bucketlists', data=form, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
 
-        dup_response = self.app.post('/bucketlists', data=form)
+        dup_response = self.app.post('/bucketlists', data=form, headers={"token": self.token})
         self.assertEqual(dup_response.status_code, 200)
         self.assertTrue(
             "list my list already exists" in dup_response.data.decode('utf-8').lower())
@@ -45,9 +43,8 @@ class CreateBucketList(BaseTestCase):
         form = {
             "title": "My list",
             "description": "lorem ipsum blah blah",
-            "token": self.token
         }
-        response = self.app.post('/bucketlists', data=form)
+        response = self.app.post('/bucketlists', data=form, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(
             "list my list created successfully" in response.data.decode('utf-8').lower())
