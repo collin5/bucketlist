@@ -22,31 +22,23 @@ class SearchTestCase(BaseTestCase):
                 }, headers={"token": self.token})
 
     def test_search_db_successfully(self):
-        response = self.app.get("/bucketlists", data={
-            "q": "one",
-            }, headers={"token": self.token})
+        response = self.app.get("/bucketlists?q=one", headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
 
     def test_search_db_successfully_content(self):
-        response = self.app.get("/bucketlists", data={
-            "q": "one",
-            }, headers={"token": self.token})
+        response = self.app.get("/bucketlists?q=one", headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 1)
 
     def test_search_db_kewords_content(self):
-        response = self.app.get("/bucketlists", data={
-            "q": 't',
-            }, headers={"token": self.token})
+        response = self.app.get("/bucketlists?q=t", headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(json.loads(response.data.decode('utf-8'))['bucketlists']), 2)
 
     def test_search_not_found(self):
-        response = self.app.get("/bucketlists", data={
-            "q": "lslsliehfie",
-            }, headers={"token": self.token})
+        response = self.app.get("/bucketlists?q=lslslsei", headers={"token": self.token})
         self.assertEqual(response.status_code, 404)
         self.assertTrue(
             "no bucketlist found" in response.data.decode('utf-8').lower())
