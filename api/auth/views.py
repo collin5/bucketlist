@@ -17,6 +17,7 @@ import jwt
 @app.route("/auth/login", methods=['POST'])
 @require_fields('username', 'password')
 def login():
+    """This is the API login endpoint, call with credentials to get token"""
     username, passphrase = request.form['username'].lower(
     ), request.form['password']
     instance = User.query.filter_by(username=username).first()
