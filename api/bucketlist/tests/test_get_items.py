@@ -16,32 +16,30 @@ class GetItemTestCase(BaseTestCase):
         self.app.post('/bucketlists', data={
             "title": "The bucket man",
             "description": "this is a decription",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
 
         # add bucket item for test case
         self.app.post('/bucketlists/1/items', data={
             "title": "item",
             "notes": "lorem ipsum dor ...",
             "deadline": "01-Feb-2019",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
 
     def test_get_bucket_item_succcessfully(self):
-        response = self.app.get('/bucketlists/1/items', data={
+        response = self.app.get('/bucketlists/1/items', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
 
     def test_get_bucket_item_succcessfully_content(self):
-        response = self.app.get('/bucketlists/1/items', data={
+        response = self.app.get('/bucketlists/1/items', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
         self.assertTrue("item" in response.data.decode('utf-8').lower())
 
     def test_get_bucket_item_list_out_of_range(self):
-        response = self.app.get('/bucketlists/2/items', data={
+        response = self.app.get('/bucketlists/2/items', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 404)
@@ -49,14 +47,14 @@ class GetItemTestCase(BaseTestCase):
             "bucketlist not found" in response.data.decode('utf-8').lower())
 
     def test_get_bucket_item_with_id_successfully(self):
-        response = self.app.get('/bucketlists/1/items/1', data={
+        response = self.app.get('/bucketlists/1/items/1', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
         self.assertTrue("item" in response.data.decode('utf-8').lower())
 
     def test_get_bucket_item_item_out_range(self):
-        response = self.app.get('/bucketlists/1/items/2', data={
+        response = self.app.get('/bucketlists/1/items/2', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 404)

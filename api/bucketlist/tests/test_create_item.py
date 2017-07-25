@@ -16,17 +16,15 @@ class CreateItemTestCase(BaseTestCase):
         self.app.post('/bucketlists', data={
             "title": "Here comes the bucketlist",
             "description": "with a description",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
 
     def test_create_bucketlist_item_successfully(self):
         form = {
             "title": "My awesome bucket item",
             "notes": "lorem ipsum dor ...",
             "deadline": "01-Jan-2018",
-            "token": self.token
         }
-        response = self.app.post('bucketlists/1/items', data=form)
+        response = self.app.post('bucketlists/1/items', data=form, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
 
     def test_create_bucketlist_item_successfully_message(self):
@@ -34,9 +32,8 @@ class CreateItemTestCase(BaseTestCase):
             "title": "My awesome bucket item",
             "notes": "lorem ipsum dor ...",
             "deadline": "01-Jan-2018",
-            "token": self.token
         }
-        response = self.app.post('bucketlists/1/items', data=form)
+        response = self.app.post('bucketlists/1/items', data=form, headers={"token": self.token})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(
             'item added successfully' in response.data.decode('utf-8').lower())
@@ -46,9 +43,8 @@ class CreateItemTestCase(BaseTestCase):
             "title": "My awesome bucket item",
             "notes": "lorem ipsum dor ...",
             "deadline": "01-Jan-2018",
-            "token": self.token
         }
-        response = self.app.post('/bucketlists/4/items', data=form)
+        response = self.app.post('/bucketlists/4/items', data=form, headers={"token": self.token})
         self.assertEqual(response.status_code, 404)
         self.assertTrue(
             "bucketlist not found" in response.data.decode('utf-8').lower())
@@ -65,7 +61,7 @@ class CreateItemTestCase(BaseTestCase):
             "token required" in response.data.decode('utf-8').lower())
 
     def test_create_bucketlist_item_empty_form(self):
-        response = self.app.post('/bucketlists/1/items', data={
+        response = self.app.post('/bucketlists/1/items', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)

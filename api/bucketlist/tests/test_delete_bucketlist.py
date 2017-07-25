@@ -16,17 +16,16 @@ class DeleteBucketlistTestCase(BaseTestCase):
         self.app.post('/bucketlists', data={
             "title": "I'm a bucketlist",
             "description": "And i am awesome",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
 
     def test_delete_bucketlist_successfully(self):
-        response = self.app.delete('/bucketlists/1', data={
+        response = self.app.delete('/bucketlists/1', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
 
     def test_delete_bucketlist_successfully_message(self):
-        response = self.app.delete('/bucketlists/1', data={
+        response = self.app.delete('/bucketlists/1', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 200)
@@ -34,13 +33,13 @@ class DeleteBucketlistTestCase(BaseTestCase):
             'bucketlist deleted successfully' in response.data.decode('utf-8').lower())
 
     def test_delete_bucketlist_out_of_range(self):
-        response = self.app.delete('/bucketlists/898', data={
+        response = self.app.delete('/bucketlists/898', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 404)
 
     def test_delete_bucketlist_out_of_range_message(self):
-        response = self.app.delete('/bucketlists/7', data={
+        response = self.app.delete('/bucketlists/7', headers={
             "token": self.token
         })
         self.assertEqual(response.status_code, 404)

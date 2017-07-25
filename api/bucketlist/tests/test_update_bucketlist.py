@@ -15,11 +15,10 @@ class UpdateBucketlistTestCase(BaseTestCase):
         self.app.post('/bucketlists', data={
             "title": "Awesome, beautiful list",
             "description": "lorem ipsum blah blah ...",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
 
     def test_update_bucketlist_successfully(self):
-        initial_request = self.app.get('/bucketlists', data={
+        initial_request = self.app.get('/bucketlists', headers={
             "token": self.token
         })
         # first confirm initial name
@@ -31,11 +30,10 @@ class UpdateBucketlistTestCase(BaseTestCase):
         update_request = self.app.put("/bucketlists/1", data={
             "title": "Edited title over here",
             "description": "hohoohohohohohohohohoho",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(update_request.status_code, 200)
 
-        final_request = self.app.get('/bucketlists/1', data={
+        final_request = self.app.get('/bucketlists/1', headers={
             "token": self.token
         })
         self.assertEqual(final_request.status_code, 200)
@@ -46,14 +44,13 @@ class UpdateBucketlistTestCase(BaseTestCase):
         update_request = self.app.put("/bucketlists/1", data={
             "title": "Again edited our title, what ?",
             "description": "lorem blah oh my god",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(update_request.status_code, 200)
         self.assertTrue(
             "bucketlist updated successfully" in update_request.data.decode('utf-8').lower())
 
     def test_update_bucketlist_no_form(self):
-        update_request = self.app.put('/bucketlists/1', data={
+        update_request = self.app.put('/bucketlists/1', headers={
             'token': self.token
         })
         self.assertEqual(update_request.status_code, 200)
@@ -64,8 +61,7 @@ class UpdateBucketlistTestCase(BaseTestCase):
         update_request = self.app.put("/bucketlists/49", data={
             "title": "Now this is not good",
             "description": "Why trying to overflow bucket",
-            "token": self.token
-        })
+            }, headers={"token": self.token})
         self.assertEqual(update_request.status_code, 404)
         self.assertTrue("bucketlist not found")
 

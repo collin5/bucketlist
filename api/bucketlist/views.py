@@ -17,7 +17,7 @@ class Static:
 
     @staticmethod
     def decode_token(request):
-        return jwt.decode(request.form['token'], app.secret_key, algorithims=['HS256'])
+        return jwt.decode(request.headers['token'], app.secret_key, algorithims=['HS256'])
 
 
 @app.route("/bucketlists", methods=['POST'])

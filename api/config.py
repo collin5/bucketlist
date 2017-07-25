@@ -10,7 +10,7 @@ import os
 SECRET_KEY = os.getenv(
     'SECRET_KEY') or "\x84\xaeI\x13\n\x9fa  \n\xdf\x08\xdb'p\x024\x1a\x9d\xc7\x01N\x02\xb9"
 
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', "postgres:///{}".format("bucketflow"))
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', "postgres:///{}".format("bucketlist"))
 
 # change to false when in production
 DEBUG = False if os.environ.get('PRODUCTION', False) else True

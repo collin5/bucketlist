@@ -34,7 +34,7 @@ def require_fields(*fields, **kwfields):
 def token_required(func):
     @wraps(func)
     def wrap(*args, **kwargs):
-        token = request.form.get('token', None)
+        token = request.headers.get('token', None)
         if not token:
             return jsonify({
                 "error_msg": "Token required for this operation"
