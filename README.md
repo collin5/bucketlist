@@ -5,7 +5,7 @@
 ### Bucketflow
 To keep track of your Todos before you ... !
 
-## Requiremnts
+## Requirements
 ```
 $ pip install -r requirements.txt
 ```
