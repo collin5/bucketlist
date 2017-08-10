@@ -15,19 +15,25 @@
                 <h4 class="mdl-typography--font-thin">Welcome to <strong>Bucketlist</strong></h4>
             </div>
             <div class="mdl-layout__header-row"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
-                <input class="mdl-textfield__input" id="login_user" type="text"/>
-                <label class="mdl-textfield__label" for="login_user">username</label>
+            <div class="mdl-cell mdl-cell--12-col"> 
+                {{ error_msg }}
             </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
-                <input class="mdl-textfield__input" id="login_password" type="text"/>
-                <label class="mdl-textfield__label" for="login_password">password</label>
-            </div>
-            <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-color--blue-200">
-                    <i class="material-icons">done</i>
-                </button>
-            </div>
+            <form (submit)="onLogin(username.value, password.value)">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                    <input class="mdl-textfield__input" id="login_user" type="text" #username/>
+                    <label class="mdl-textfield__label" for="login_user">username</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                    <input class="mdl-textfield__input" id="login_password" type="text" #password/>
+                    <label class="mdl-textfield__label" for="login_password">password</label>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-color--blue-200" type="submit">
+                        <i class="material-icons">done</i>
+                    </button>
+                </div>
+
+            </form>
         </div>
         <div class="mdl-layout-spacer"></div>
     </div>
