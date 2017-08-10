@@ -12,7 +12,7 @@ $ pip install -r requirements.txt
 ```
 
 ## API Functionality Scope
-Documentation https://urgelist.herokuapp.com/apidocs/
+Documentation https://open-bucketlist.herokuapp.com/apidocs/
 
 |Method | Endpoint | Usage |
 | ---- | ---- | --------------- |
@@ -39,7 +39,7 @@ $ gunicorn manage:app
 
 
 ## Usage
-View API doc at https://urgelist.herokuapp.com/apidocs/
+View API doc at https://open-bucketlist.herokuapp.com/apidocs/
 
 ## Testing
 In the project directory
