@@ -13,6 +13,22 @@
     <body>
         <base href="/">
         <app-root></app-root>
+<script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
         <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script type="text/javascript">
+$(function(){
+    // script to sync mdlite
+    $('body').bind('DOMSubtreeModified', function(){
+        syncMdl();
+    })
+    function syncMdl(){
+        componentHandler.upgradeAllRegistered();
+    }
+});
+
+        </script>
     </body>
 </html>

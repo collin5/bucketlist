@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class Dashboard{
     private title = "Bucketlist";
+
+    onLogout(){
+        // remove token and refresh
+        localStorage.clear();
+        window.location.reload();
+    }
 }
