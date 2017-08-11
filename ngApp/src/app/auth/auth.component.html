@@ -12,7 +12,7 @@
         <div class="mdl-cell mdl-cell--3-col">
             <div class="mdl-layout__header-row"></div>
             <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
-                <h4 class="mdl-typography--font-thin">Welcome to <strong>Bucketlist</strong></h4>
+                <h4 class="mdl-typography--font-thin" style="font-family: 'Sedgwick Ave Display', cursive">Welcome to <strong>Bucketlist</strong></h4>
             </div>
             <div class="mdl-layout__header-row"></div>
             <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center"> 
@@ -43,9 +43,9 @@
                     </form>
                 </div>
                 <div id="tab-panel__register" class="mdl-tabs__panel" style="padding-top:20px">
-                    <form (submit) = "onRegister(username.value, password.value, confirm_password.value)">
+                    <form (submit) = "onRegister(reg_username.value, email.value, reg_password.value)">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
-                            <input class="mdl-textfield__input" id="register_user" type="text" #username/>
+                            <input class="mdl-textfield__input" id="register_user" type="text" #reg_username/>
                             <label class="mdl-textfield__label" for="register_user">username</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
@@ -53,7 +53,7 @@
                             <label class="mdl-textfield__label" for="register_email">email</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
-                            <input class="mdl-textfield__input" id="register_password" type="password" #password/>
+                            <input class="mdl-textfield__input" id="register_password" type="password" #reg_password/>
                             <label class="mdl-textfield__label" for="register_password">password</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">

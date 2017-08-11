@@ -10,7 +10,7 @@ import { SharedModule } from '../shared/shared.module';
         AuthComponent
     ],
     imports: [
-        HttpModule
+        SharedModule
     ],
     providers: [
         AuthService

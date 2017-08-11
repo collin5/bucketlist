@@ -5,11 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [],
-    imports:[
-        FormsModule,
-        CommonModule,
-        HttpModule
-    ],
+    imports:[],
     exports:[
         FormsModule,
         CommonModule,
