@@ -1,0 +1,31 @@
+<div class="mdl-layout mdl-js-layout">
+    <header class="mdl-layout__header mdl-layout__header--fixed">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">
+                {{title}}
+            </span>
+            <div class="mdl-layout-spacer"></div>
+            <button id="nav-btn__profile" class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="nav-btn__profile">
+                <li class="mdl-menu__item" (click) = "onLogout()">Logout</li>
+            </ul>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">{{title}}</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="#" (click)="onLogout()">Sign out</a>
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+    <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--11-col">
+            <dash-bucketlists></dash-bucketlists>
+        </div>
+    </div>
+    </main>
+
+</div>

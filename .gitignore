@@ -102,3 +102,4 @@ ENV/
 *.swp
 *.DS_Store
 *.db
+ngApp/dist/

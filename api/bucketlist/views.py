@@ -17,13 +17,32 @@ class Static:
 
     @staticmethod
     def decode_token(request):
-        return jwt.decode(request.form['token'], app.secret_key, algorithims=['HS256'])
+        return jwt.decode(request.headers['token'], app.secret_key, algorithims=['HS256'])
 
 
 @app.route("/bucketlists", methods=['POST'])
 @token_required
 @require_fields('title', 'description')
 def bucketlists():
+    """Endpoint for adding bucketlists, call with token included in header
+---
+       tags:
+        - Bucketlists
+       parameters:
+        - name: token
+          in: headers
+          type: string
+          required: true
+        - name: title
+          in: body
+          type: string
+          required: true
+        - name: description
+          in: body
+          type: string
+          required: true
+         """
+
     title, desc = request.form['title'], request.form['description']
     payload = Static.decode_token(request)
 
@@ -45,11 +64,24 @@ def bucketlists():
 @app.route("/bucketlists/<int:id>", methods=['GET'])
 @token_required
 def get_bucketlists(id=None):
-    """Gets bucket list from database"""
+    """Endpoint for getting bucketlists, call with token included in header
+---
+       tags:
+        - Bucketlists
+       parameters:
+        - name: token
+          in: headers
+          type: string
+          required: true
+        - name: id
+          in: path
+          type: int
+          required: false
+         """
     payload = Static.decode_token(request)
-    limit, offset = request.form.get(
-        'limit', None), request.form.get('offset', None)
-    search = request.form.get('q', None)
+    limit, offset = request.args.get(
+        'limit', None), request.args.get('offset', None)
+    search = request.args.get('q', None)
 
     query = Bucketlist.query.filter_by(
         user_id=payload['id']) if not id else Bucketlist.query.filter_by(user_id=payload['id'], id=id)
@@ -77,6 +109,23 @@ def get_bucketlists(id=None):
 @app.route("/bucketlists/<int:id>", methods=['PUT', 'DELETE'])
 @token_required
 def update_bucketlist(id):
+    """Endpoint for updating a bucketlist, call with token included in header
+---
+       tags:
+        - Bucketlists
+       parameters:
+        - name: id
+          in: path
+          type: int
+          required: true
+        - name: title
+          in: body
+          type: string
+        - name: description
+          in: body
+          type: string
+         """
+
     payload = Static.decode_token(request)
 
     if request.method == 'PUT':
@@ -121,8 +170,36 @@ def update_bucketlist(id):
 @token_required
 @require_fields('title', 'notes', 'deadline')
 def bucket_items(id):
+    """Endpoint for adding bucketlist item, call with token included in header
+---
+       tags:
+        - Bucketlist items
+       parameters:
+        - name: id
+          in: path
+          required: true
+          type: int
+        - name: title
+          in: body
+          required: true
+          type: string
+        - name: notes
+          in: body
+          required: true
+          type: string
+        - name: deadline
+          type: string
+          description: "Use format dd-M-Y"
+          required: true
+         """
+
     title, notes = request.form['title'], request.form['notes']
-    deadline = datetime.strptime(request.form['deadline'], "%d-%b-%Y")
+    try:
+        deadline = datetime.strptime(request.form['deadline'], "%d-%b-%Y")
+    except Exception as ex:
+        return jsonify({
+            "error_msg": "Ivalid date format please, use dd-M-Y"
+            })
 
     payload = Static.decode_token(request)
 
@@ -148,6 +225,21 @@ def bucket_items(id):
 @app.route("/bucketlists/<int:id>/items/<int:item_id>", methods=['GET'])
 @token_required
 def get_bucket_items(id, item_id=None):
+    """Endpoint for getting bucketlist items, call with token included in header
+---
+       tags:
+        - Bucketlist items
+       parameters:
+        - name: id
+          type: int
+          required: true
+          in: path
+        - name: item_id
+          type: int
+          required: false
+          in: path
+         """
+
     payload = Static.decode_token(request)
     if not Bucketlist.query.filter_by(user_id=payload['id'], id=id).first():
         return jsonify({
@@ -176,6 +268,31 @@ def get_bucket_items(id, item_id=None):
 @app.route("/bucketlists/<int:id>/items/<int:item_id>", methods=['PUT', 'DELETE'])
 @token_required
 def update_bucket_items(id, item_id):
+    """Endpoint for updating bucketlist item, call with token included in header
+---
+       tags:
+        - Bucketlist items
+       parameters:
+        - name: id
+          in: path
+          required: true
+          type: int
+        - name: item_id
+          required: true
+          type: int
+          in: path
+        - name: title
+          in: body
+          type: string
+        - name: notes
+          in: body
+          type: string
+        - name: deadline
+          type: string
+          description: "Use format dd-M-Y"
+
+         """
+         
     payload = Static.decode_token(request)
 
     # first check if bucketlist exists

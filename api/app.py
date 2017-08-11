@@ -7,8 +7,13 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flasgger import Swagger
+from flask_cors import CORS
+import os
 
 app = Flask(__name__)
+CORS(app)
+Swagger(app)
 app.config.from_pyfile("config.py")
 
 db = SQLAlchemy(app)
@@ -21,5 +26,6 @@ from api.auth.views import *
 from api.bucketlist.views import *
 
 # run flask app instance
+port = int(os.environ.get("PORT", 5000))
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=port)

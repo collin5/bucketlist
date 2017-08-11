@@ -8,7 +8,6 @@
 from api.app import db
 from datetime import datetime
 from random import choice
-import string
 
 
 class User(db.Model):
@@ -16,7 +15,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True)
-    email = db.Column(db.String(100), unique=True)
+    email = db.Column(db.String(100))
     password = db.Column(db.String(64), unique=True)
     salt = db.Column(db.String(64), unique=True)
     time_stamp = db.Column(db.DateTime, default=datetime.utcnow())

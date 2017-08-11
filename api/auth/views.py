@@ -17,6 +17,20 @@ import jwt
 @app.route("/auth/login", methods=['POST'])
 @require_fields('username', 'password')
 def login():
+    """This is the API login endpoint, call with credentials to get token
+---
+       tags:
+        - Authentication
+       parameters:
+        - name: username
+          in: body
+          required: true
+          type: string
+        - name: password
+          in: body
+          required: true
+          type: string
+         """
     username, passphrase = request.form['username'].lower(
     ), request.form['password']
     instance = User.query.filter_by(username=username).first()
@@ -44,6 +58,25 @@ def login():
 @app.route("/auth/register", methods=['POST'])
 @require_fields('username', 'password', email='[^@]+@[^@]+\.[^@]+')
 def register():
+    """This is the API register endpoint
+---
+       tags:
+        - Authentication
+       parameters:
+        - name: username
+          in: body
+          type: string
+          required: true
+        - name: password
+          in: body
+          type: string
+          required: true
+        - name: email
+          in: body
+          type: email
+          required: true
+         """
+
     username, email = request.form['username'].lower(), request.form['email']
     passphrase = request.form['password']
 
