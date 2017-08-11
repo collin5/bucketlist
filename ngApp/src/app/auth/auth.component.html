@@ -1,0 +1,75 @@
+<div class="mdl-layout mdl-js-layout ">
+    <header class="mdl-layout__header mdl-layout__header--transparent">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title mdl-typography--font-bold mdl-color-text--blue-grey-500"></span>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation"></nav>
+        </div>
+    </header>
+    <main class="mdl-layout__content">
+    <div class="mdl-grid">
+        <div class="mdl-layout-spacer"></div>
+        <div class="mdl-cell mdl-cell--3-col">
+            <div class="mdl-layout__header-row"></div>
+            <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center">
+                <h4 class="mdl-typography--font-thin">Welcome to <strong>Bucketlist</strong></h4>
+            </div>
+            <div class="mdl-layout__header-row"></div>
+            <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center"> 
+                <p class="mdl-color-text--red">{{ error_msg }}
+                </p>
+            </div>
+
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                <div class="mdl-tabs__tab-bar" style="border-bottom: 0px solid transparent">
+                    <a class="mdl-tabs__tab is-active" href="#tab-panel__login">Login</a>
+                    <a class="mdl-tabs__tab" href="#tab-panel__register">Register</a>
+                </div>
+                <div id="tab-panel__login" class="mdl-tabs__panel is-active" style="padding-top:20px">
+                    <form (submit)="onLogin(username.value, password.value)">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                            <input class="mdl-textfield__input" id="login_user" type="text" #username/>
+                            <label class="mdl-textfield__label" for="login_user">username</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                            <input class="mdl-textfield__input" id="login_password" type="password" #password/>
+                            <label class="mdl-textfield__label" for="login_password">password</label>
+                        </div>
+                        <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised" type="submit">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div id="tab-panel__register" class="mdl-tabs__panel" style="padding-top:20px">
+                    <form (submit) = "onRegister(username.value, password.value, confirm_password.value)">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                            <input class="mdl-textfield__input" id="register_user" type="text" #username/>
+                            <label class="mdl-textfield__label" for="register_user">username</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                            <input class="mdl-textfield__input" id="register_email" type="email" #email/>
+                            <label class="mdl-textfield__label" for="register_email">email</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                            <input class="mdl-textfield__input" id="register_password" type="password" #password/>
+                            <label class="mdl-textfield__label" for="register_password">password</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                            <input class="mdl-textfield__input" id="register_password-confirm" type="password" #password_confirm/>
+                            <label class="mdl-textfield__label" for="register_password-confirm">confirm password</label>
+                        </div>
+                        <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right">
+                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="mdl-layout-spacer"></div>
+    </div>
+    </main>
+</div>

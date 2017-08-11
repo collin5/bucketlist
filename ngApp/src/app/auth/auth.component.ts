@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 
 @Component({
     selector: 'app-login',
     moduleId: module.id,
-    templateUrl: 'login.component.html'
+    templateUrl: 'auth.component.html'
 })
-export class LoginComponent {
+export class AuthComponent {
     private error_msg: string = "";
     constructor(private _auth: AuthService){}
 
@@ -24,6 +24,8 @@ export class LoginComponent {
     private authenticate(data: any): void{
         if (data.hasOwnProperty('error_msg')){
             this.error_msg = data['error_msg'];
+        }else{
+            // authenticate if token present
         }
     }
 
