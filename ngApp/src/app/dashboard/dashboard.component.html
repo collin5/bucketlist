@@ -1,3 +1,24 @@
-<div>
-    <h1>Dashboard</h1>
+<div class="mdl-layout mdl-js-layout">
+    <header class="mdl-layout__header mdl-layout__header--fixed">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">
+                {{title}}
+            </span>
+            <div class="mdl-layout-spacer"></div>
+            <button id="nav-btn__profile" class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
+                <i class="material-icons">face</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="nav-btn__profile">
+                <li class="mdl-menu__item">Logout</li>
+            </ul>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">{{title}}</span>
+        <nav class="mdl-navigation">
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+    </main>
+
 </div>
