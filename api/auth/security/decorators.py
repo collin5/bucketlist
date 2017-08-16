@@ -7,6 +7,7 @@
 
 from flask import request, jsonify
 from functools import wraps
+from datetime import timedelta
 import re
 
 
@@ -18,18 +19,19 @@ def require_fields(*fields, **kwfields):
                 if not request.form.get(field, None):
                     return jsonify({
                         "error_msg": "Please fill all fields"
-                        })
+                    })
 
             for key, value in kwfields.items():
                 if not re.match(r'{}'.format(value), request.form.get(key, None)):
                     return jsonify({
                         "error_msg": "Invalid {}".format(key)
-                        })
-                
+                    })
+
             return func(*args, **kwargs)
 
         return wrap
     return decorate
+
 
 def token_required(func):
     @wraps(func)
@@ -38,7 +40,7 @@ def token_required(func):
         if not token:
             return jsonify({
                 "error_msg": "Token required for this operation"
-                }), 403
+            }), 403
 
         return func(*args, **kwargs)
     return wrap

@@ -8,9 +8,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flasgger import Swagger
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app)
+
 Swagger(app)
 app.config.from_pyfile("config.py")
 

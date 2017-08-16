@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/collin5/bucketflow.svg?branch=master)](https://travis-ci.org/collin5/bucketflow)
 [![Coverage Status](https://coveralls.io/repos/github/collin5/bucketflow/badge.svg?branch=master)](https://coveralls.io/github/collin5/bucketflow?branch=master)
 
+
 # bucketlist
 To keep track of your Todos before you ... !
 
@@ -12,7 +13,9 @@ $ pip install -r requirements.txt
 ```
 
 ## API Functionality Scope
+
 Documentation https://free-bucketlist.herokuapp.com/apidocs/
+
 
 |Method | Endpoint | Usage |
 | ---- | ---- | --------------- |
@@ -39,7 +42,9 @@ $ gunicorn manage:app
 
 
 ## Usage
+
 View API doc at https://free-bucketlist.herokuapp.com/apidocs/
+
 
 ## Testing
 In the project directory
