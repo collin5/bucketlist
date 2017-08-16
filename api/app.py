@@ -13,6 +13,7 @@ import os
 
 app = Flask(__name__)
 CORS(app)
+
 Swagger(app)
 app.config.from_pyfile("config.py")
 
