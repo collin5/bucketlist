@@ -6,6 +6,34 @@
             <a class="mdl-tabs__tab" href="#bucketlists-complete__panel">Completed</a>
         </div>
         <div id="bucketlists-new__panel" class="mdl-tabs__panel is-active">
+            <!-- add bucketlist modal -->
+            <div id="add-bucket__modal" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <h4>Add bucketlist</h4>
+                        </div>
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <div class="mdl-textfield mdl-js-textfield" style="width:90%">
+                                <input class="mdl-textfield__input" type="text" placeholder="Title"/>
+                            </div>
+                            <div class="mdl-textfield mdl-js-textfield" style="width:90%">
+                                <textarea class="mdl-textfield__input" rows="5" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <button class="mdl-button md-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised">Ok</button>
+                            <button class="uk-modal-close mdl-button mdl-js-button mdl-js-ripple-effect">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mdl-grid">
+                <app-bucket></app-bucket>
+            </div>
+            <button uk-toggle="target: #add-bucket__modal" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored bottom-right">
+                <i class="material-icons">add</i>
+            </button>
         </div>
         <div id="bucketlists-pending__panel" class="mdl-tabs__panel">
         </div>
@@ -13,6 +41,4 @@
         </div>
     </div>
 </div>
-<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored bottom-right">
-    <i class="material-icons">add</i>
-</button>
+
