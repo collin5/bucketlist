@@ -1,7 +1,8 @@
 declare var UIkit: any;
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BucketlistService } from './bucketlist.service';
+import { IBucket } from './bucket';
 
 @Component({
     selector: 'dash-bucketlists',
@@ -9,14 +10,20 @@ import { BucketlistService } from './bucketlist.service';
     templateUrl: 'bucketlists.component.html',
     providers: [ BucketlistService ]
 })
-export class Bucketlists{
+export class Bucketlists implements OnInit{
 
     constructor(private _bucketService: BucketlistService){}
 
     title: string = 'My bucketlists';
     add_bucket__err: string = null;
 
+    listNew: IBucket[];
+
     showAddSpinner = false;
+
+    ngOnInit(): void{
+        this.getList();
+    }
 
     onAdd(title, desc): void{
         this.showAddSpinner = true;
@@ -28,6 +35,8 @@ export class Bucketlists{
                     let $msg = ($data.hasOwnProperty('success_msg'))? $data['success_msg']: 'An error occured !';
                     UIkit.modal('#add-bucket__modal').hide();
                     UIkit.notification($msg, { status: 'success' });
+                    this.listNew = [];
+                    this.getList();
                 }
                 this.showAddSpinner = false;
             },
@@ -37,6 +46,15 @@ export class Bucketlists{
                 }
                 this.showAddSpinner = false;
             },
+        )
+    }
+
+    getList(): void{
+        this._bucketService.getBucketlists().subscribe(
+            $data => this.listNew = $data,
+            $error =>{
+                UIkit.notification($error, {status: 'danger'})
+            }
         )
     }
 }

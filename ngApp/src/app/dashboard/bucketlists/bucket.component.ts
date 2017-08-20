@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-bucket',
@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
     templateUrl: 'bucket.component.html'
 })
 export class Bucket{
-    title: string = "Bucket";
-    description: string = "description"
+    @Input() title: string;
+    @Input() description: string;
 }

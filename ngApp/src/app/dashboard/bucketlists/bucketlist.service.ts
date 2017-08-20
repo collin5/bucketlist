@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { IBucket } from './bucket';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -30,6 +31,18 @@ export class BucketlistService{
         ).catch(
             this.errorHandler
         )
+    }
+
+    getBucketlists(): Observable<IBucket[]>{
+        let $uri = 'http://127.0.0.1:5000/bucketlists';
+        let $headers = new Headers();
+        $headers.append('token', localStorage.getItem('token'))
+        return this._http.get($uri, {headers: $headers}).map(
+            (response: Response) => <IBucket[]>response.json()['bucketlists']
+        ).catch(
+            this.errorHandler
+        )
+        
     }
 
     private errorHandler(error: Response){
