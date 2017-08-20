@@ -8,23 +8,36 @@
         <div id="bucketlists-new__panel" class="mdl-tabs__panel is-active">
             <!-- add bucketlist modal -->
             <div id="add-bucket__modal" uk-modal>
-                <div class="uk-modal-dialog uk-modal-body">
+                <div *ngIf ="showAddSpinner" id="add-bucket__spinner" class="mdl-cell mdl-cell--12-col mdl-typography--text-center" style="position:relative; top:20vh">
+                    <div uk-spinner></div>
+                    <div class="mdl-layout__header-row"></div>
+                    <p class="mdl-typography--text-center mdl-color-text--white">Please hold on ....</p>
+                </div>
+                <div *ngIf="!showAddSpinner" class="uk-modal-dialog uk-modal-body">
+                    <button class="uk-modal-close-outside" uk-close></button>
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col">
-                            <h4>Add bucketlist</h4>
+                            <h4 class="mdl-typography--font-thin">Add bucketlist</h4>
                         </div>
+
                         <div class="mdl-cell mdl-cell--12-col">
-                            <div class="mdl-textfield mdl-js-textfield" style="width:90%">
-                                <input class="mdl-textfield__input" type="text" placeholder="Title"/>
-                            </div>
-                            <div class="mdl-textfield mdl-js-textfield" style="width:90%">
-                                <textarea class="mdl-textfield__input" rows="5" placeholder="Description"></textarea>
-                            </div>
+                            <p class="mdl-color-text--red">{{add_bucket__err}}</p>
                         </div>
-                        <div class="mdl-cell mdl-cell--12-col">
-                            <button class="mdl-button md-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised">Ok</button>
-                            <button class="uk-modal-close mdl-button mdl-js-button mdl-js-ripple-effect">Close</button>
-                        </div>
+                        <form (submit)="onAdd(bucket_title.value, bucket_desc.value)">
+                            <div class="mdl-cell mdl-cell--12-col">
+                                <div class="mdl-textfield mdl-js-textfield" style="width:90%">
+                                    <input class="mdl-textfield__input" type="text" placeholder="Title" #bucket_title/>
+                                </div>
+                                <div class="mdl-textfield mdl-js-textfield" style="width:90%">
+                                    <textarea class="mdl-textfield__input" rows="5" placeholder="Description" #bucket_desc></textarea>
+                                </div>
+                            </div>
+                            <div class="mdl-cell mdl-cell--12-col">
+                                <button type="submit" class="mdl-button md-js-button mdl-js-ripple-effect mdl-color--blue-600 mdl-button--raised">Ok</button>
+                                <button type="reset" class="uk-modal-close mdl-button mdl-js-button mdl-js-ripple-effect">Close</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
