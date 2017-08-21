@@ -24,7 +24,9 @@ import { BucketInfoComponent } from './dashboard/bucket/bucket-info.component';
           { path: 'dashboard', component: Dashboard, canActivate: [
               AuthGuard
           ] },
-          { path:'dashboard/bucket/:id', component: BucketInfoComponent }
+          { path:'dashboard/bucket/:id', component: BucketInfoComponent, canActivate: [
+              AuthGuard
+          ] }
       ])
   ],
     providers: [
