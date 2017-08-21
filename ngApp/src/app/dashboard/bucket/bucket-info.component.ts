@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'bt-info',
@@ -9,9 +9,12 @@ import { ActivatedRoute } from '@angular/router';
 export class BucketInfoComponent{
     title: string = "Bucket info";
     bucket_title: string = "Bucket title";
-    private _id: number | string;
+    private _id: number;
 
-    constructor(private _route: ActivatedRoute){
-        this._id = this._route.snapshot.params['id']
+    constructor(private _route: ActivatedRoute, private _router: Router){
+        this._id = this._route.snapshot.params['id'];
+        if (typeof this._id == undefined || this._id < 1){
+            this._router.navigate(['/dashboard']);
+        }
     }
 }
