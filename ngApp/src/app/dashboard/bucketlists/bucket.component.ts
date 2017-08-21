@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
     templateUrl: 'bucket.component.html'
 })
 export class Bucket{
+    @Input() _id: string | number;
     @Input() title: string;
     @Input() description: string;
 
@@ -14,7 +15,7 @@ export class Bucket{
     constructor(private _router: Router){
     }
 
-    onClick(): void{
-        this._router.navigate(['/dashboard/bucket/info'])
+    onClick(id: string | number): void{
+        this._router.navigate(['/dashboard/bucket/', id]);
     }
 }

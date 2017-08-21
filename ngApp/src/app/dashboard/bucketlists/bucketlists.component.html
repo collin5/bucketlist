@@ -47,7 +47,7 @@
                 <p class="mdl-typography--text-center">Please hold on ....</p>
             </div>
             <div *ngIf="listNew" class="mdl-grid">
-                <app-bucket *ngFor="let bucket of listNew | keys" [title] ="listNew[bucket]['title']"
+                <app-bucket *ngFor="let bucket of listNew | keys" [_id]="bucket" [title] ="listNew[bucket]['title']"
                     [description] ="listNew[bucket]['description']"></app-bucket>
             </div>
             <button uk-toggle="target: #add-bucket__modal" class="uk-animation-slide-bottom mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored bottom-right">
