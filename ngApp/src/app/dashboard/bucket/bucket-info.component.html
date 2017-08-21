@@ -1,0 +1,43 @@
+<div class="mdl-layout mdl-js-layout">
+    <header class="mdl-layout__header mdl-color--grey-200 mdl-layout__header--waterfall">
+        <div class="mdl-layout__header-row">
+            <a [routerLink]="['/dashboard']" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-layout__drawer-button">
+                <i class="material-icons">arrow_back</i>
+            </a>
+            <span class="mdl-layout-title uk-animation-scale-up">{{title}}</span>
+            <div class="mdl-layout-spacer"></div>
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <i class="material-icons">more_vert</i>
+            </button>
+        </div>
+    </header>
+    <div class="mdl-layout__content">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--12-col">
+                <h1 class="uk-heading-line uk-text-center uk-animation-slide-top-small"><span class="bucket-title">{{bucket_title}}</span></h1>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+                <table class="uk-table uk-table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Excerpt</th>
+                            <th>Expected by</th>
+                            <th>Created on</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="!bucket_items">
+                            <td colspan="4" class="uk-text-center">
+                                There is nothing here, try <a>Adding</a> some items
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--red-200 bottom-right uk-animation-slide-bottom">
+                <i class="material-icons">add</i>
+            </button>
+        </div>
+    </div>
+</div>
