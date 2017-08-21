@@ -8,7 +8,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { Dashboard } from './dashboard/dashboard.component';
 
 import { AuthGuard } from './auth/auth-guard.service';
-import { BucketIdGuard } from './dashboard/bucket/id-guard.service';
 
 import { BucketInfoComponent } from './dashboard/bucket/bucket-info.component';
 
@@ -26,13 +25,12 @@ import { BucketInfoComponent } from './dashboard/bucket/bucket-info.component';
               AuthGuard
           ] },
           { path:'dashboard/bucket/:id', component: BucketInfoComponent, canActivate: [
-              AuthGuard, BucketIdGuard
+              AuthGuard 
           ] }
       ])
   ],
     providers: [
         AuthGuard,
-        BucketIdGuard
     ],
   bootstrap: [AppComponent]
 })
