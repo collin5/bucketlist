@@ -1,19 +1,19 @@
-    <div class="mdl-card mdl-shadow--2dp uk-animation-scale-up" style="background: url('http://68.media.tumblr.com/26f1db79797aaf8577a32e288c5afefd/tumblr_n7yhhvUQtx1st5lhmo1_1280.jpg'); background-size: cover; margin: 10px">
+    <div (click)="onClick()"class="mdl-card mdl-shadow--2dp uk-animation-scale-up uk-card-hover" style="background-size: cover; margin: 10px; cursor: pointer">
         <div class="mdl-card__title mdl-card--expand">
-            <span class="mdl-card__title-text mdl-color-text--white">{{title}}</span>
+            <span class="mdl-card__title-text" style="font-family: 'Indie Flower', cursive;">{{title}}</span>
         </div>
-        <div class="mdl-card__supporting-text mdl-color-text--grey-100">
+        <div class="mdl-card__supporting-text">
             {{description}}
         </div>
         <div class="mdl-card__actions mdl-card--border">
-            <a  class="mdl-button mdl-js-button mdl-js-ripple--effect mdl-color-text--white">Edit</a>
-            <a  class="mdl-button mdl-js-button mdl-js-ripple--effect mdl-button--icon mdl-color-text--white">
-                <i class="material-icons">delete</i>
+            <a  class="mdl-button mdl-js-button mdl-js-ripple--effect mdl-button--icon mdl-color-text--blue-600">
+                <i class="material-icons">create</i>
             </a>
         </div>
         <div class="mdl-card__menu">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color-text--white">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                 <i class="material-icons">more_vert</i>
             </button>
         </div>
     </div>
+

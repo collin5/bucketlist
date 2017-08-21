@@ -9,6 +9,8 @@ import { Dashboard } from './dashboard/dashboard.component';
 
 import { AuthGuard } from './auth/auth-guard.service';
 
+import { BucketInfoComponent } from './dashboard/bucket/bucket-info.component';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -21,7 +23,8 @@ import { AuthGuard } from './auth/auth-guard.service';
           { path: '', redirectTo: '/login', pathMatch: 'full' },
           { path: 'dashboard', component: Dashboard, canActivate: [
               AuthGuard
-          ] }
+          ] },
+          { path:'dashboard/bucket/:id', component: BucketInfoComponent }
       ])
   ],
     providers: [
