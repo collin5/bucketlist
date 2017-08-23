@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -6,10 +6,12 @@ import { ActivatedRoute, Router } from '@angular/router';
     moduleId: module.id,
     templateUrl: 'bucket-info.component.html'
 })
-export class BucketInfoComponent implements OnInit{
+export class BucketInfoComponent{
     title: string = "Bucket info";
     bucket_title: string = "Bucket title";
     private _id: number;
+
+    bucketItemAddDate: string;
 
     // TODO:  get info from api
     bucket_info: boolean = true;
@@ -21,7 +23,8 @@ export class BucketInfoComponent implements OnInit{
         }
     }
 
-    ngOnInit():void{
-        // initialise datepicer
+    onAdd(title, notes): void{
+        alert(this.bucketItemAddDate);
     }
+
 }

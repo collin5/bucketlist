@@ -14,7 +14,7 @@
     <div class="mdl-layout__content">
         <div id="bucketlists-new__panel" class="mdl-tabs__panel is-active">
             <!-- add bucketlist modal -->
-            <div id="add-bucket__item-modal" uk-modal>
+            <div id="add-bucket__item-modal" uk-modal bg-close="false">
                 <div *ngIf ="showAddSpinner" id="add-bucket__spinner" class="mdl-cell mdl-cell--12-col mdl-typography--text-center" style="position:relative; top:20vh">
                     <div uk-spinner></div>
                     <div class="mdl-layout__header-row"></div>
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="mdl-cell mdl-cell--12-col">
-                                <material-datepicker></material-datepicker>
+                                <material-datepicker [(date)] ="bucketItemAddDate" (onSelect)="onDateSelected()"></material-datepicker>
                             </div>
                             <div class="mdl-cell mdl-cell--12-col">
                                 <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored">
