@@ -1,5 +1,5 @@
-<div class="mdl-layout mdl-js-layout">
-    <header class="mdl-layout__header mdl-color--grey-200 mdl-layout__header--waterfall">
+<div class="mdl-layout mdl-js-layout mdl-color--lime-200">
+    <header class="mdl-layout__header mdl-color--lime-200 mdl-layout__header--waterfall">
         <div class="mdl-layout__header-row">
             <a [routerLink]="['/dashboard']" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-layout__drawer-button">
                 <i class="material-icons">arrow_back</i>
@@ -12,32 +12,82 @@
         </div>
     </header>
     <div class="mdl-layout__content">
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col">
-                <h1 class="uk-heading-line uk-text-center uk-animation-slide-top-small"><span class="bucket-title">{{bucket_title}}</span></h1>
+        <div id="bucketlists-new__panel" class="mdl-tabs__panel is-active">
+            <!-- add bucketlist modal -->
+            <div id="add-bucket__item-modal" uk-modal>
+                <div *ngIf ="showAddSpinner" id="add-bucket__spinner" class="mdl-cell mdl-cell--12-col mdl-typography--text-center" style="position:relative; top:20vh">
+                    <div uk-spinner></div>
+                    <div class="mdl-layout__header-row"></div>
+                    <p class="mdl-typography--text-center mdl-color-text--white">Please hold on ....</p>
+                </div>
+                <div *ngIf="!showAddSpinner" class="uk-modal-dialog uk-modal-body">
+                    <button class="uk-modal-close-outside" uk-close></button>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <h4 class="mdl-typography--font-thin">Add bucket item</h4>
+                        </div>
+
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <p class="mdl-color-text--red">{{add_item__err}}</p>
+                        </div>
+                        <form (submit)="onAdd(title.value, notes.value)">
+                            <div class="mdl-cell mdl-cell--12-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                    <input class="mdl-textfield__input" type="text" #title placeholder="Title">
+                                </div>
+
+                            </div>
+                            <div class="mdl-cell mdl-cell--12-col">
+                                <div class="mdl-textfield mdl-js-textfield">
+                                    <textarea placeholder="Notes" rows="5" class="mdl-textfield__input" #notes></textarea>
+                                </div>
+                            </div>
+                            <div class="mdl-cell mdl-cell--12-col">
+                                <material-datepicker></material-datepicker>
+                            </div>
+                            <div class="mdl-cell mdl-cell--12-col">
+                                <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored">
+                                    Done
+                                </button>
+                                <button class="mdl-button mdl-js-button mdl-js-ripple--effect uk-modal-close">
+                                    Dismiss
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mdl-cell mdl-cell--12-col">
-                <table class="uk-table uk-table-striped">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Excerpt</th>
-                            <th>Expected by</th>
-                            <th>Created on</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngIf="!bucket_items">
-                            <td colspan="4" class="uk-text-center">
-                                There is nothing here, try <a>Adding</a> some items
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div *ngIf="!bucket_info" class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col mdl-typography--text-center" style="position:relative; top:20vh">
+                    <div uk-spinner></div>
+                    <div class="mdl-layout__header-row"></div>
+                    <p class="mdl-typography--text-center">Please hold on ....</p>
+                </div>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--red-200 bottom-right uk-animation-slide-bottom">
-                <i class="material-icons">add</i>
-            </button>
+            <div *ngIf="bucket_info"class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col">
+                    <table class="uk-table uk-table-striped mdl-color--white mdl-shadow--2dp uk-animation-scale-up">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Excerpt</th>
+                                <th>Expected by</th>
+                                <th>Created on</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!bucket_items">
+                                <td colspan="5" class="uk-text-center">
+                                    There is nothing here, try <a>Adding</a> some items
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button uk-toggle="target: #add-bucket__item-modal" class="mdl-button mdl-js-button mdl-button--fab mdl-color--red-200 bottom-right uk-animation-slide-bottom">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
         </div>
     </div>
-</div>

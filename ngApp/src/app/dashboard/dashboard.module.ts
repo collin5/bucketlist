@@ -7,12 +7,14 @@ import { KeysPipe } from './bucketlists/convert_to_keys.pipe';
 import { RouterModule } from '@angular/router';
 import { BucketInfoComponent } from './bucket/bucket-info.component';
 
+import { DatepickerModule } from 'angular2-material-datepicker';
+
 @NgModule({
     declarations: [
         Dashboard, Bucketlists, Bucket, KeysPipe, BucketInfoComponent
     ],
     imports: [
-        SharedModule, RouterModule
+        SharedModule, RouterModule, DatepickerModule
     ],
     providers: []
 })
